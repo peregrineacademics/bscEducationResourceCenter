@@ -1,0 +1,272 @@
+﻿<script type="text/javascript">
+    function ShowHideDiv(sel, x) {
+        var divEdge = document.getElementById("divInstructor");
+        divInstructor.style.display = sel.value == "0" ? "block" : (sel.value == "0" ? "block" : "none");
+
+        var divEdge = document.getElementById("divEdge");
+        divEdge.style.display = sel.value == "1" ? "block" : (sel.value == "1" ? "block" : "none");
+    }
+</script>
+
+<div id="content">
+    <!-- row -->
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h1 class="page-title txt-color-blueDark">
+                <i class="fa-fw fa fa-file"></i> Guides <span>
+                    >
+                    Create New
+                </span>
+            </h1>
+        </div>
+    </div>
+    <section id="widget-grid" class="">
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false" 
+                        data-widget-collapsed="false" data-widget-fullscreenbutton="false" data-widget-deletebutton="false"
+                        data-widget-custombutton="false" data-widget-togglebutton="false">
+                    <header>
+                        <h2>Instructor Guide / Edge Guide</h2>
+                    </header>
+                    <div>
+                       <div class="widget-body no-padding">
+                           <form class="smart-form" action="/Home/CreateGuide" method="post">
+                               <fieldset>
+                                   <section>
+                                       <label class="label" style="font-weight:bold; font-size:11px;">GUIDE<span style="color:red;">&nbsp;*</span></label>
+                                       <label class="select">
+                                           <select class="select2" onchange="ShowHideDiv(this)">
+                                               <option value="0">Instructor Guide</option>
+                                               <option value="1">Edge Guide</option>
+                                           </select>
+                                       </label>
+                                   </section>
+                                   <section>
+                                       <label class="label" style="font-weight:bold; font-size:11px;">ISSUE<span style="color:red;">&nbsp;*</span></label>
+                                       <label class="select">
+                                           <select class="select2">
+                                               <option value="0">10-01-17</option>
+                                               <option value="1">10-06-17</option>
+                                               <option value="2">10-07-17</option>
+                                               <option value="3">11-01-17</option>
+                                               <option value="4">12-01-17</option>
+                                           </select>
+                                       </label>
+                                   </section>
+                                   <section>
+                                       <label class="label" style="font-weight:bold; font-size:11px;">ARTICLE TITLE<span style="color:red;">&nbsp;*</span></label>
+                                       <label class="select">
+                                           <select class="select2">
+                                               <option value="0">America’s Retailers Are Closing Stores Faster Than Ever</option>
+                                               <option value="1">Hacking the Need for a Full-Time Job</option>
+                                               <option value="2">Lies, Damn Lies, and Financial Statistics</option>
+                                               <option value="3">The Taming of a Teen Emporium</option>
+                                               <option value="4">Show Us Your Tax Reforms</option>
+                                           </select>
+                                       </label>
+                                   </section>                              
+                                   <section>
+                                       <label class="label" style="font-weight:bold; font-size:11px;">REVIEWER<span style="color:red;">&nbsp;*</span></label>
+                                       <label class="select">
+                                           <select class="select2">
+                                               <option value="0">John A. Doe</option>
+                                               <option value="1">John A. Doe</option>
+                                               <option value="2">John A. Doe</option>
+                                               <option value="3">John A. Doe</option>
+                                               <option value="4">John A. Doe</option>
+                                           </select>
+                                       </label>
+                                   </section>
+                                   <section>
+                                       <label class="label" style="font-weight:bold; font-size:11px;">DISCIPLINES & TOPICS<span style="color:red;">&nbsp;*</span></label>
+                                       <label class="select">
+                                           <select class="select2" multiple>
+                                               <option value="1">Accounting and Taxation</option>
+                                               <option value="2">&nbsp;&nbsp;&nbsp;- Financial Accounting</option>
+                                               <option value="3">&nbsp;&nbsp;&nbsp;- Taxation</option>
+                                               <option value="4">Business Fundamentals</option>
+                                               <option value="5">&nbsp;&nbsp;&nbsp;- Accounting</option>
+                                               <option value="6">&nbsp;&nbsp;&nbsp;- Management</option>
+                                               <option value="7">&nbsp;&nbsp;&nbsp;- MIS</option>
+                                               <option value="8">Business Law</option>
+                                               <option value="9">&nbsp;&nbsp;&nbsp;- Securities</option>
+                                               <option value="10">Economics</option>
+                                               <option value="11">&nbsp;&nbsp;&nbsp;- Microeconomics</option>
+                                           </select>
+                                       </label>
+                                   </section>
+                                   <section>
+                                       <label class="label" style="font-weight:bold; font-size:11px;">SECTORS<span style="color:red;">&nbsp;*</span></label>
+                                       <label class="select">
+                                           <select class="select2" multiple>
+                                               <option value="1">Consumer Goods and Services</option>
+                                               <option value="2">Energy</option>
+                                               <option value="3">Financial Services</option>
+                                               <option value="4">Government</option>
+                                               <option value="5">Healthcare</option>
+                                               <option value="6">Manufacturing</option>
+                                               <option value="7">Sports and Entertainment</option>
+                                               <option value="8">Business Law</option>
+                                               <option value="9">Technology</option>
+                                               <option value="10">Economics</option>
+                                               <option value="11">Transportation</option>
+                                           </select>
+                                           <i></i>
+                                       </label>
+                                   </section>
+                                   <section>
+                                       <label class="label" style="font-weight:bold; font-size:11px;">COMPETENCIES<span style="color:red;">&nbsp;*</span></label>
+                                       <label class="select">
+                                           <select class="select2" multiple>
+                                               <option value="1">Communication</option>
+                                               <option value="2">Critical Thinking/Decision-Making</option>
+                                               <option value="3">Ethics</option>
+                                               <option value="4">Global Awareness</option>
+                                               <option value="5">Innovation/Entrepreneurship</option>
+                                               <option value="6">Leadership</option>
+                                               <option value="7">Sustainability</option>
+                                               <option value="8">Business Law</option>
+                                               <option value="9">Technology</option>
+                                               <option value="10">Economics</option>
+                                               <option value="11">Transportation</option>
+                                           </select>
+                                       </label>
+                                   </section>
+                                   <section>
+                                       <label class="label" style="font-weight:bold; font-size:11px;">REGION<span style="color:red;">&nbsp;*</span></label>
+                                       <label class="select">
+                                           <select class="select2">
+                                               <option value="1">Africa</option>
+                                               <option value="2">Asia/Oceania</option>
+                                               <option value="3">Europe</option>
+                                               <option value="4">Latin America</option>
+                                               <option value="5">North America</option>
+                                               <option value="6">The Middle East</option>
+                                           </select>
+                                       </label>
+                                   </section>
+                                   <div id="divInstructor" style="display:block;">
+                                       <section>
+                                           <label class="label" style="font-weight:bold; font-size:11px;">ABSTRACT</label>
+                                           <label class="textarea">
+                                               <textarea rows="6"></textarea>
+                                           </label>
+                                       </section>
+                                       <section>
+                                           <label class="label" style="font-weight:bold; font-size:11px;">SUMMARY</label>
+                                           <label class="textarea">
+                                               <textarea rows="8"></textarea>
+                                           </label>
+                                       </section>
+                                       <section>
+                                           <label class="label" style="font-weight:bold; font-size:11px;">DISCUSSION QUESTIONS</label>
+                                           <label class="textarea">
+                                               <textarea rows="2" placeholder="Discussion Question 1"></textarea>
+                                           </label>
+                                           <label class="textarea" style="margin-top:3px;">
+                                               <textarea rows="2" placeholder="Discussion Question 2"></textarea>
+                                           </label>
+                                           <label class="textarea" style="margin-top:3px;">
+                                               <textarea rows="2" placeholder="Discussion Question 3"></textarea>
+                                           </label>
+                                           <label class="textarea" style="margin-top:3px;">
+                                               <textarea rows="2" placeholder="Discussion Question 4"></textarea>
+                                           </label>
+                                           <label class="textarea" style="margin-top:3px;">
+                                               <textarea rows="2" placeholder="Discussion Question 5"></textarea>
+                                           </label>
+                                           <label class="textarea" style="margin-top:3px;">
+                                               <textarea rows="2" placeholder="Discussion Question 6"></textarea>
+                                           </label>
+                                           <label class="textarea" style="margin-top:3px;">
+                                               <textarea rows="2" placeholder="Discussion Question 7"></textarea>
+                                           </label>
+                                           <label class="textarea" style="margin-top:3px;">
+                                               <textarea rows="2" placeholder="Discussion Question 8"></textarea>
+                                           </label>
+                                       </section>
+                                   </div>
+                                   <div id="divEdge" style="display:none;">
+                                       <section>
+                                           <label class="label" style="font-weight:bold; font-size:11px;">KEY LEARNING POINTS</label>
+                                           <label class="textarea">
+                                               <textarea rows="2" placeholder="Key Learning Point 1"></textarea>
+                                           </label>
+                                           <label class="textarea" style="margin-top:3px;">
+                                               <textarea rows="2" placeholder="Key Learning Point 2"></textarea>
+                                           </label>
+                                           <label class="textarea" style="margin-top:3px;">
+                                               <textarea rows="2" placeholder="Key Learning Point 3"></textarea>
+                                           </label>
+                                           <label class="textarea" style="margin-top:3px;">
+                                               <textarea rows="2" placeholder="Key Learning Point 4"></textarea>
+                                           </label>
+                                           <label class="textarea" style="margin-top:3px;">
+                                               <textarea rows="2" placeholder="Key Learning Point 5"></textarea>
+                                           </label>
+                                           <label class="textarea" style="margin-top:3px;">
+                                               <textarea rows="2" placeholder="Key Learning Point 6"></textarea>
+                                           </label>
+                                           <label class="textarea" style="margin-top:3px;">
+                                               <textarea rows="2" placeholder="Key Learning Point 7"></textarea>
+                                           </label>
+                                           <label class="textarea" style="margin-top:3px;">
+                                               <textarea rows="2" placeholder="Key Learning Point 8"></textarea>
+                                           </label>
+                                       </section>
+                                       <section>
+                                           <label class="label" style="font-weight:bold; font-size:11px;">SUMMARY</label>
+                                           <label class="textarea">
+                                               <textarea rows="6"></textarea>
+                                           </label>
+                                           <section>
+                                               <label class="label" style="font-weight:bold; font-size:11px;">ACTIVITIES</label>
+                                               <label class="textarea">
+                                                   <textarea rows="2" placeholder="Activity 1"></textarea>
+                                               </label>
+                                               <label class="textarea" style="margin-top:3px;">
+                                                   <textarea rows="2" placeholder="Activity 2"></textarea>
+                                               </label>
+                                               <label class="textarea" style="margin-top:3px;">
+                                                   <textarea rows="2" placeholder="Activity 3"></textarea>
+                                               </label>
+                                               <label class="textarea" style="margin-top:3px;">
+                                                   <textarea rows="2" placeholder="Activity 4"></textarea>
+                                               </label>
+                                               <label class="textarea" style="margin-top:3px;">
+                                                   <textarea rows="2" placeholder="Activity 5"></textarea>
+                                               </label>
+                                               <label class="textarea" style="margin-top:3px;">
+                                                   <textarea rows="2" placeholder="Activity 6"></textarea>
+                                               </label>
+                                               <label class="textarea" style="margin-top:3px;">
+                                                   <textarea rows="2" placeholder="Activity 7"></textarea>
+                                               </label>
+                                               <label class="textarea" style="margin-top:3px;">
+                                                   <textarea rows="2" placeholder="Activity 8"></textarea>
+                                               </label>
+                                           </section>
+                                    </div>
+                               </fieldset>
+                               <footer>
+                                   <button type="button" class="btn btn-default" onclick="window.history.back();">Cancel</button>
+                                   <button type="submit" class="btn btn-primary">Save</button>
+                               </footer>
+                           </form>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />

@@ -1,0 +1,21 @@
+{
+  "name": "ASP.NET",
+  "private": true,
+  "dependencies": {
+    "jquery-validation": "1.16.0",
+    "font-awesome": "v4.7.0",
+    "bootstrap": "v3.3.7",
+    "jquery": "jQuery#2.1.1",
+    "jquery-ui": "1.10.3",
+    "jquery-ajax-unobtrusive": "jquery.unobtrusive-ajax#v3.2.4",
+    "jquery-validation-unobtrusive": "v3.2.4"
+  },
+  "resolutions": {
+    "jquery-validation-unobtrusive": "v3.2.6",
+    "jquery-validation": "1.16.0",
+    "jquery-ui": "1.12.1",
+    "jquery": ">=1.6",
+    "font-awesome": "v4.7.0",
+    "bootstrap": "v4.0.0-alpha.6"
+  }
+}

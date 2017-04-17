@@ -1,0 +1,152 @@
+﻿<div id="content">
+    <!-- row -->
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h1 class="page-title txt-color-blueDark">
+                <i class="fa-fw fa fa-calendar"></i> Issues <span>
+                    >
+                    Edit
+                </span>
+            </h1>
+        </div>
+    </div>
+    <section id="widget-grid" class="">
+        <div class="row">
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <div class="jarviswidget" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false"
+                     data-widget-collapsed="false" data-widget-fullscreenbutton="false" data-widget-deletebutton="false"
+                     data-widget-custombutton="false" data-widget-togglebutton="false">
+                    <header>
+                        <h2>Issue</h2>
+                    </header>
+                    <div>
+                        <div class="widget-body no-padding">
+                            <form class="smart-form" action="/Issues/CreateIssue" method="post">
+                                <fieldset>
+                                    <section>
+                                        <label class="label" style="font-weight:bold; font-size:11px;">ENABLED<span style="color:red;">&nbsp;*</span></label>
+                                        <label class="select">
+                                            <select class="select2">
+                                                <option value="0">Yes</option>
+                                                <option value="1">No</option>
+                                            </select>
+                                        </label>
+                                    </section>
+                                    <section>
+                                        <label class="label" style="font-weight:bold; font-size:11px;">ISSUE<span style="color:red;">&nbsp;*</span></label>
+                                        <label class="select">
+                                            <label class="input">
+                                                <input type="text" class="date-picker">
+                                            </label>
+                                        </label>
+                                    </section>
+                                    <section>
+                                        <label class="label" style="font-weight:bold; font-size:11px;">COVER IMAGE<span style="color:red;">&nbsp;*</span></label>
+                                        <div class="input input-file">
+                                            <span class="button" style="background-color:#04747a;"><input type="file" id="file" onchange="this.parentNode.nextSibling.value = this.value">Browse</span><input type="text" readonly>
+                                        </div>
+                                    </section>
+                                </fieldset>
+                                <footer>
+                                    <button type="button" class="btn btn-default" onclick="window.history.back();">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </footer>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+    <div class="row" style="margin-top:8px; margin-left:0px; margin-right:0px;">
+        <article class="col-sm-12 col-md-12 col-lg-12" style="padding:8px; border:solid 1px #ccc;">
+            <div class="pull-left">
+                <b style="color:#00aaab;">&nbsp;ARTICLES</b>
+            </div>
+            <div class="pull-right" style="margin-bottom:6px;">
+                <a href="#" class="btn btn-default btn-xs" data-toggle="modal" data-target="#divmodalcreatearticle">
+                    <i class="fa fa-plus-circle text-success"></i>&nbsp;Create New
+                </a>
+            </div>
+            <table id="tableArticles" class="table table-hover table-condensed gridview" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th style="width:78px; min-width:78px;"></th>
+                        <th data-class="expand" style="text-align:center; width:400px;">Title</th>
+                        <th data-hide="phone" style="text-align:center;">URL</th>
+                        <th data-hide="phone" style="text-align:center;"># of Reviews</th>
+                        <th data-hide="phone" style="text-align:center; width:30px;">Enabled</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="btn-group">
+                                <a href="#" data-toggle="modal" data-target="#" class="btn btn-default btn-xs">&nbsp;<i class="fa fa-pencil"></i></a>
+                                <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+                                    <span class="caret" />
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#" data-toggle="modal" data-target="#"><i class="fa fa-remove"></i>&nbsp;&nbsp;Delete</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td style="text-align:left">Hacking the Need for a Full-Time Job</td>
+                        <td style="text-align:left"><a>https://resourcecenter.businessweek.com/reviews/the-fed-is-watching-wall-street</a></td>
+                        <td style="text-align:center">1</td>
+                        <td style="text-align:center"><span class="fa fa-check" style="color:green;"></span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="btn-group">
+                                <a href="#" data-toggle="modal" data-target="#" class="btn btn-default btn-xs">&nbsp;<i class="fa fa-pencil"></i></a>
+                                <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+                                    <span class="caret" />
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#" data-toggle="modal" data-target="#"><i class="fa fa-remove"></i>&nbsp;&nbsp;Delete</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td style="text-align:left">Lies, Damn Lies, and Financial Statistics</td>
+                        <td style="text-align:left"><a>https://resourcecenter.businessweek.com/reviews/how-much-is-a-miracle-worth</a></td>
+                        <td style="text-align:center">2</td>
+                        <td style="text-align:center"><span class="fa fa-check" style="color:green;"></span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="btn-group">
+                                <a href="#" data-toggle="modal" data-target="#" class="btn btn-default btn-xs">&nbsp;<i class="fa fa-pencil"></i></a>
+                                <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+                                    <span class="caret" />
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#" data-toggle="modal" data-target="#"><i class="fa fa-remove"></i>&nbsp;&nbsp;Delete</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td style="text-align:left">How Much Is a Miracle Worth?</td>
+                        <td style="text-align:left"><a>https://resourcecenter.businessweek.com/reviews/how-much-is-a-miracle-worth</a></td>
+                        <td style="text-align:center">0</td>
+                        <td style="text-align:center"><span class="fa fa-check" style="color:green;"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </article>
+    </div>
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />

@@ -1,0 +1,51 @@
+﻿<!-- Left panel : Navigation area -->
+<!-- Note: This width of the aside area can be adjusted through LESS variables -->
+<aside id="left-panel">
+
+    <!-- User info -->
+    @{ await Html.RenderPartialAsync("_CurrentUser"); }
+    <!-- end user info -->
+    <!-- NAVIGATION : This navigation is also responsive
+    To make this navigation dynamic please make sure to link the node
+    (the reference to the nav > ul) after page load. Or the navigation
+    will not initialize.
+    -->
+    <nav>
+        <ul>
+            <li class="@Html.RouteIf("index", "active")">
+                <a href="@Url.Action("index", "home")"><i class="fa fa-lg fa-fw fa-file"></i> <span class="menu-item-parent">Guides</span></a>
+            </li>
+            <li class="@Html.RouteIf("issues", "active")">
+                <a href="@Url.Action("issues", "issues")"><i class="fa fa-lg fa-fw fa-calendar"></i> <span class="menu-item-parent">Issues</span></a>
+            </li>
+            <li class="@Html.RouteIf("reviewers", "active")">
+                <a href="@Url.Action("reviewers", "reviewers")"><i class="fa fa-lg fa-fw fa-institution"></i> <span class="menu-item-parent">Reviewers</span></a>
+            </li>
+            @*<li class="@Html.RouteIf("properties", "active")">
+                <a href="#"><i class="fa fa-lg fa-fw fa-pencil-square-o"></i> <span class="menu-item-parent">Article Properties</span></a>
+                <ul>
+                    <li class="@Html.RouteIf("disciplines", "active")">
+                        <a href="@Url.Action("disciplines", "properties")">Disciplines & Topics</a>
+                    </li>
+                    <li class="@Html.RouteIf("sectors", "active")">
+                        <a href="@Url.Action("sectors", "properties")">Sectors</a>
+                    </li>
+                    <li class="@Html.RouteIf("competencies", "active")">
+                        <a href="@Url.Action("competencies", "properties")">Competencies</a>
+                    </li>
+                    <li class="@Html.RouteIf("regions", "active")">
+                        <a href="@Url.Action("regions", "properties")">Regions</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="@Html.RouteIf("users", "active")">
+                <a href="@Url.Action("users", "users")"><i class="fa fa-lg fa-fw fa-users"></i> <span class="menu-item-parent">Users</span></a>
+            </li>*@
+        </ul>
+    </nav>
+    <span class="minifyme" data-action="minifyMenu">
+        <i class="fa fa-arrow-circle-left hit"></i>
+    </span>
+
+</aside>
+<!-- END NAVIGATION -->
