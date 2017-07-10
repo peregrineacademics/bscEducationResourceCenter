@@ -1,0 +1,57 @@
+﻿@model PAS.ResourceCenter.Web.Administration.ViewModels.Users.UserViewModel
+
+<div id="content">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        @if (User.IsInRole(Constants._rolePASAdministrator) || User.IsInRole(Constants._roleEditor))
+        {
+            <div id="divcreatenew">
+                <a href="@Url.Action("Create", "Users")" class="btn btn-default pull-right" style="margin-top: 8px; padding:2px 15px;">
+                    <i class="fa fa-plus-circle text-success"></i>&nbsp;Create New
+                </a>
+            </div>
+        }
+        <h1 class="page-title">
+            <i class="fa-fw fa fa-users"></i>
+            Users
+        </h1>
+        <div id="divgriddata" style="font-size:13px;">
+            <!-- List contents goes here -->
+        </div>
+        <br />
+        <br />
+        <br />
+    </div>
+</div>
+
+@section scripts {
+    <script src="@Url.Content("~/jsx/gridpager.jsx")"></script>
+    <script src="@Url.Content("~/jsx/usersearch.jsx")"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#inputSearchName').keypress(function (e) {
+                // Handle enter key
+                if (e.keyCode == 13) {
+                    $('#buttonSearch').click();
+                }
+            });
+
+            $("#inputSearchName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/users/listautocompletevalues",
+                        type: "POST",
+                        dataType: "json",
+                        data: { searchName: request.term },
+                        success: function (data) {
+                            response($.map(data.list, function (item) {
+                                return { label: item.name, value: item.name };
+                            }))
+
+                        }
+                    })
+                }
+            });
+        });
+    </script>
+}

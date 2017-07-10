@@ -1,0 +1,51 @@
+﻿@using PAS.ResourceCenter.Web.Administration.Common
+@model PAS.ResourceCenter.Web.Administration.ViewModels.ReviewProperties.CompetencyViewModel
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" onclick="clearData();">
+                &times;
+            </button>
+            <h4 class="modal-title">Competency / Create New</h4>
+        </div>
+        <div class="modal-body no-padding">
+            <div class="smart-form">
+                @Html.HiddenFor(m => m.Id)
+                @Html.ValidationBootstrap()
+                <fieldset>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-3 field-background" style="text-align:right;">Enabled</label>
+                            <div class="col col-2">
+                                @Html.DropDownListFor(
+                                    m => m.Enabled,
+                                    MiscUtilities.GetYesNo(),
+                                    new { @class = "form-control", @style = "width:100%" })
+                                @Html.ValidationMessageFor(m => m.Enabled)
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="row">
+                            <label class="label col col-3 field-background" style="text-align:right;"><b><span style="color:red; font-size:14px;">*</span>&nbsp;Name</b></label>
+                            <div class="col col-9">
+                                <label class="input">
+                                    <i class="icon-append fa fa-pencil-square-o"></i>
+                                    @Html.TextBoxFor(m => m.Name, new { placeholder = "", autocomplete = "off", required = "required", @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Name)
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                </fieldset>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="clearData();">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>

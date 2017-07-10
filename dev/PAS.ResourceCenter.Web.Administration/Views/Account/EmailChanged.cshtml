@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.PageId = "extr-page";
+    ViewBag.PageClass = "animated fadeInDown";
+}
+
+@section topright{
+    <span id="extr-page-header-space"> <span class="hidden-mobile">Already have an account?</span> <a href="@Url.Action("login", "account")" class="btn btn-danger">Login</a> </span>
+}
+
+<div id="content" class="container">
+    <div class="row">
+        @{ Html.RenderPartial("_EmailChangedText"); }
+    </div>
+</div>

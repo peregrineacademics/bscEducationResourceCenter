@@ -1,0 +1,125 @@
+﻿@using PAS.ResourceCenter.Web.Administration.Common
+
+@model PAS.ResourceCenter.Web.Administration.ViewModels.Users.UserViewModel
+
+@Html.HiddenFor(m => m.Id)
+
+<div id="content">
+    <div class="row">
+        <article class="col-sm-12 col-md-12 col-lg-12">
+            <form class="form-horizontal">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">                        
+                        <h4 class="pull-left" style="margin-top:8px;">
+                            <i class="fa-fw fa fa-user"></i>
+                            <a href="@Url.Action("Index", "Users")">Users</a>&nbsp;/&nbsp;@Model.LastName.ToString(),&nbsp;@Model.FirstName.ToString() (@{ if (Model.Enabled)
+                                {<span class="fa fa-check" style="color:green;" />}
+                                else
+                                {<span class="fa fa-remove" style="color:lightgray;" />} })
+                        </h4>
+                    </div>
+                </div>
+                <div style="margin-top:16px;"></div>
+                <ul id="tabDefault" class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#tabProfile" data-toggle="tab">Profile</a>
+                    </li>
+                    <li>
+                        <a href="#tabLogs" data-toggle="tab">Logs</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="tabProfile">
+                        <div class="row">
+                            <article class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-horizontal" style="margin:12px;">
+                                    <fieldset>
+                                        <div class="form-group field-background">
+                                            <label class="col-md-2 control-label">Enabled</label>
+                                            <div class="col-md-2">
+                                                @if (Model.Enabled)
+                                                {
+                                                    <input class="form-control" type="text" readonly="readonly" value="@Constants._valueYes">
+                                                }
+                                                else
+                                                {
+                                                    <input class="form-control" type="text" readonly="readonly" value="@Constants._valueNo">
+                                                }
+                                            </div>
+                                            <div class="col-md-8 control-label hidden-sm hidden-xs" style="text-align:right;">
+                                                <i>Created: @Model.Created.ToString(Constants._formatDate5)</i>
+                                            </div>
+                                        </div>
+                                        <div class="form-group field-background">
+                                            <label class="col-md-2 control-label">Role</label>
+                                            <div class="col-md-4">
+                                                <input class="form-control" type="text" readonly="readonly" value="@Model.RoleName">
+                                            </div>
+                                        </div>
+                                        <div class="form-group field-background">
+                                            <label class="col-md-2 control-label"><b><span style="color:red; font-size:14px;">*</span>&nbsp;Last Name</b></label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="text" readonly="readonly" value="@Model.LastName">
+                                            </div>
+                                        </div>
+                                        <div class="form-group field-background">
+                                            <label class="col-md-2 control-label field-background"><b><span style="color:red; font-size:14px;">*</span>&nbsp;First Name</b></label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="text" readonly="readonly" value="@Model.FirstName">
+                                            </div>
+                                        </div>
+                                        <div class="form-group field-background">
+                                            <label class="col-md-2 control-label field-background">Middle Name</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="text" readonly="readonly" value="@Model.MiddleName">
+                                            </div>
+                                        </div>
+                                        <div class="form-group field-background">
+                                            <label class="col-md-2 control-label field-background">Title</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="text" readonly="readonly" value="@Model.Title">
+                                            </div>
+                                        </div>
+                                        <div class="form-group field-background">
+                                            <label class="col-md-2 control-label"><b><span style="color:red; font-size:14px;">*</span>&nbsp;Email</b></label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="text" readonly="readonly" value="@Model.Email">
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade in" id="tabLogs">
+                        <div class="row">
+                            <div style="margin-top:8px; margin-left:12px; margin-right:12px;">
+                                <table id="tableLogs" class="table table-hover table-condensed gridview" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th data-class="expand" style="text-align:center; width:10px;">&nbsp;</th>
+                                            <th data-hide="expand">Message</th>
+                                            <th data-hide="phone" style="text-align:center; width:180px;">Logged By</th>
+                                            <th data-hide="phone" style="text-align:center; width:150px;">Time Stamp</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in DBUtilities.GetLogsPerUser(Model.Id))
+                                        {
+                                            <tr>
+                                                <td>&nbsp;</td>
+                                                <td>@item.Message.ToString()</td>
+                                                <td>@DBUtilities.GetUsersFullNameById(item.CreatedByUserId)</td>
+                                                <td style="text-align:center;">@item.CreatedOn.ToString(Constants._formatDate3)</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </article>
+    </div>
+</div>

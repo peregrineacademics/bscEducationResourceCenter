@@ -8,7 +8,8 @@
     "jquery": "jQuery#2.1.1",
     "jquery-ui": "1.10.3",
     "jquery-ajax-unobtrusive": "jquery.unobtrusive-ajax#v3.2.4",
-    "jquery-validation-unobtrusive": "v3.2.4"
+    "jquery-validation-unobtrusive": "v3.2.4",
+    "react": "v15.6.1"
   },
   "resolutions": {
     "jquery-validation-unobtrusive": "v3.2.6",

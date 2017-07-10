@@ -1,14 +1,10 @@
-﻿<!-- SHORTCUT AREA : With large tiles (activated via clicking user name tag)
-Note: These tiles are completely responsive,
-you can add as many as you like
--->
-<div id="shortcut">
+﻿<div id="shortcut">
     <ul>
         <li>
             <a href="#" class="jarvismetro-tile big-cubes bg-color-blue" data-toggle="modal" data-target="#divmodaleditmyprofile">
                 <span class="iconbox">
                     <i class="fa fa-user fa-4x"></i>
-                    <span>My Profile</span>
+                    <span style="font-size:12px;">My Profile</span>
                 </span>
             </a>
         </li>
@@ -16,16 +12,40 @@ you can add as many as you like
             <a href="#" class="jarvismetro-tile big-cubes bg-color-blue" data-toggle="modal" data-target="#divmodalchangemypassword">
                 <span class="iconbox">
                     <i class="fa fa-key fa-4x"></i>
-                    <span>Change Password</span>
+                    <span style="font-size:12px;">Change Password</span>
                 </span>
             </a>
         </li>
     </ul>
 </div>
-<!-- END SHORTCUT AREA -->
-@*<div class="modal" id="divmodalchangemypassword" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-   @{ await Html.RenderPartialAsync("ChangePassword"); }
-</div>*@
 
 
+<form asp-controller="Home"
+      asp-action="MyProfile"
+      asp-anti-forgery="true"
+      data-ajax="true"
+      data-ajax-method="Post"
+      data-ajax-success="onSuccess"
+      data-ajax-update="#divmodaleditmyprofile"
+      method="post"
+      class="form-horizontal">
+    <div class="modal" id="divmodaleditmyprofile" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        @await Component.InvokeAsync("MyProfile");
+    </div>
+</form>
 
+
+<form asp-controller="Home"
+      asp-action="ChangePassword"
+      asp-anti-forgery="true"
+      data-ajax="true"
+      data-ajax-method="Post"
+      data-ajax-mode="replace"
+      data-ajax-success="onSuccess"
+      data-ajax-update="#divmodalchangemypassword"
+      method="post"
+      class="form-horizontal">
+    <div class="modal" id="divmodalchangemypassword" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        @await Component.InvokeAsync("ChangePassword");
+    </div>
+</form>

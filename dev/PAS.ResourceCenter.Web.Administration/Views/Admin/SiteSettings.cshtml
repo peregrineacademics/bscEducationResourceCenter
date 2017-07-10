@@ -1,0 +1,110 @@
+﻿@using PAS.ResourceCenter.Web.Administration.ViewModels.Admin
+@model PAS.ResourceCenter.Web.Administration.ViewModels.Admin.SettingsViewModel
+
+<div id="content">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h1 class="page-title">
+                <i class="fa-fw fa fa-gear"></i> Site Settings
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div style="margin-left:12px; margin-right:12px;">
+            <table id="tableSettings" class="table table-hover table-condensed gridview" style="table-layout:fixed; width:100%; font-size:13px;">
+                <thead>
+                    <tr>
+                        <th style="width:24px; min-width:24px;"></th>
+                        <th data-class="expand" style="width:200px;">Name</th>
+                        <th data-hide="phone">Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (SettingViewModel setting in Model.Settings)
+                    {
+                        <tr>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" data-toggle="modal" data-target="#@setting.DivEditId" class="btn btn-default btn-xs">&nbsp;<i class="fa fa-pencil"></i></a>
+                                </div>
+                                <!-- Edit modal goes here -->
+                                <form asp-controller="Admin"
+                                      asp-action="EditSetting"
+                                      asp-anti-forgery="true"
+                                      data-ajax="true"
+                                      data-ajax-method="Post"
+                                      data-ajax-success="onSuccess"
+                                      data-ajax-update="#@("divmodaleditsetting" + setting.Id.ToString())"
+                                      method="post"
+                                      class="form-horizontal">
+                                    <div class="modal" id="@setting.DivEditId" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                                        @await Component.InvokeAsync("EditSetting", new { Id = setting.Id });
+                                    </div>
+                                </form>
+                            </td>
+                            <td>&nbsp;&nbsp;@setting.DisplayName.ToString()</td>
+                            @if (setting.Password)
+                            {
+                                <td style="word-wrap:break-word; color:silver;">*****************</td>
+                            }
+                            else if (setting.Collection)
+                            {
+                                <td style="word-wrap:break-word;">@setting.CollectionValue.ToString()</td>
+                            }
+                            else
+                            {
+                                <td style="word-wrap:break-word;">@setting.Value1.ToString()</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script type="text/javascript">
+    $(document).ready(function () {
+        /* // DOM Position key index //
+            l - Length changing (dropdown)
+            f - Filtering input (search)
+            t - The Table! (datatable)
+            i - Information (records)
+            p - Pagination (paging)
+            r - pRocessing
+            < and > - div elements
+            <"#id" and > - div with an id
+            <"class" and > - div with a class
+            <"#id.class" and > - div with an id and class
+        Also see: http://legacy.datatables.net/usage/features */
+
+        var responsiveHelperTable = undefined;
+
+        var breakpointDefinition = {
+            tablet: 4096,
+            phone: 480
+        };
+
+        $('#tableSettings').dataTable({
+            "sDom": "<'dt-toolbar'r>" +
+            "t" +
+            "",
+            "autoWidth": true,
+            "bPaginate": false,
+            "preDrawCallback": function () {
+                // Initialize the responsive datatables helper once.
+                if (!responsiveHelperTable) {
+                    responsiveHelperTable = new ResponsiveDatatablesHelper($('#tableSettings'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelperTable.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelperTable.respond();
+            }
+        });
+    })
+</script>
+}

@@ -1,0 +1,204 @@
+﻿@using PAS.ResourceCenter.Web.Administration.Common
+
+@model PAS.ResourceCenter.Web.Administration.ViewModels.Users.UserViewModel
+
+<div id="content">
+    <div class="row">
+        <article class="col-sm-12 col-md-12 col-lg-12">
+            @using (Html.BeginForm("Edit", "Users", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.Id)
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <h4 class="pull-left" style="margin-top:8px;">
+                            <i class="fa-fw fa fa-user"></i>
+                            <a href="@Url.Action("Index", "Users")">Users</a>&nbsp;/&nbsp;@Model.LastName.ToString(),&nbsp;@Model.FirstName.ToString() (@{ if (Model.Enabled)
+                                {<span class="fa fa-check" style="color:green;" />}
+                                else
+                                {<span class="fa fa-remove" style="color:lightgray;" />} })
+                        </h4>
+                        <div class="btn-group pull-right" style="margin-top:6px;">
+                            <button type="submit" class="btn btn-primary">
+                                <span class="hidden-xs"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</span>
+                                <span class="visible-xs"><i class="fa fa-save"></i></span>
+                            </button>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="hidden-xs"><i class="fa fa-bolt text-info"></i>&nbsp;Actions&nbsp;<span class="caret"></span></span>
+                                <span class="visible-xs"><i class="fa fa-bolt text-info"></i>&nbsp;<span class="caret"></span></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="#" data-toggle="modal" data-target="#divmodalresetpasswordemail"><i class="fa fa-send"></i>&nbsp;&nbsp;Reset Password</a></li>
+                                @if (User.IsInRole(Constants._rolePASAdministrator) || User.IsInRole(Constants._roleEditor))
+                                {
+                                    <li class="divider"></li>
+                                    <li><a href="#" data-toggle="modal" data-target="#divmodalpurge"><i class="fa fa-remove"></i>&nbsp;&nbsp;Purge User</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top:6px;"></div>
+                <ul id="tabDefault" class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#tabProfile" data-toggle="tab">Profile</a>
+                    </li>
+                    <li>
+                        <a href="#tabLogs" data-toggle="tab">Logs</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="tabProfile">
+                        <div class="row">
+                            <article class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-horizontal" style="margin:12px;">
+                                    @if (ViewBag.Message == Constants._valueSuccess)
+                                    {
+                                        <span class="help-block" style="color:green;"><i class="fa fa-info-circle"></i> @TempData[Constants._valueMessage].ToString()</span>
+                                    }
+                                    else if (ViewBag.Message == Constants._valueError)
+                                    {
+                                        <span class="help-block" style="color:red;"><i class="fa fa-warning"></i> @TempData[Constants._valueMessage].ToString()</span>
+                                    }
+                                    <fieldset>
+                                        <div class="form-group field-background">
+                                            <label class="col-md-2 control-label">Enabled</label>
+                                            <div class="col-md-2">
+                                                @Html.DropDownListFor(
+                                                    m => m.Enabled,
+                                                    MiscUtilities.GetYesNo(),
+                                                    new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.Enabled)
+                                            </div>
+                                            <div class="col-md-8 control-label hidden-sm hidden-xs" style="text-align:right;">
+                                                <i>Created: @Model.Created.ToString(Constants._formatDate5)</i>
+                                            </div>
+                                        </div>
+                                        <div class="form-group field-background">
+                                            <label class="col-md-2 control-label">Role</label>
+                                            @if (User.IsInRole(Constants._rolePASAdministrator))
+                                            {
+                                                <div class="col-md-3">
+                                                    @Html.DropDownListFor(
+                                                        m => m.RoleName,
+                                                        MiscUtilities.GetRolesForUser(Constants._rolePASAdministrator),
+                                                        new { @class = "form-control", @onchange = "ShowHideClient(this, 0)" })
+                                                    @Html.ValidationMessageFor(m => m.RoleName)
+                                                </div>
+                                            }
+                                            else if (User.IsInRole(Constants._roleEditor))
+                                            {
+                                                <div class="col-md-3">
+                                                    @Html.DropDownListFor(
+                                                        m => m.RoleName,
+                                                        MiscUtilities.GetRolesForUser(Constants._roleEditor),
+                                                        new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(m => m.RoleName)
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="form-group field-background">
+                                            <label class="col-md-2 control-label"><b><span style="color:red; font-size:14px;">*</span>&nbsp;Last Name</b></label>
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(m => m.LastName, new { placeholder = "", autocomplete = "off", required = "required", @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.LastName)
+                                            </div>
+                                        </div>
+                                        <div class="form-group field-background">
+                                            <label class="col-md-2 control-label field-background"><b><span style="color:red; font-size:14px;">*</span>&nbsp;First Name</b></label>
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(m => m.FirstName, new { placeholder = "", autocomplete = "off", required = "required", @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.FirstName)
+                                            </div>
+                                        </div>
+                                        <div class="form-group field-background">
+                                            <label class="col-md-2 control-label field-background">Middle Name</label>
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(m => m.MiddleName, new { placeholder = "", autocomplete = "off", @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.MiddleName)
+                                            </div>
+                                        </div>
+                                        <div class="form-group field-background">
+                                            <label class="col-md-2 control-label field-background">Title</label>
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(m => m.Title, new { placeholder = "Ex. Dean, Assistant Dean, Names", autocomplete = "off", @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.Title)
+                                            </div>
+                                        </div>
+                                        <div class="form-group field-background">
+                                            <label class="col-md-2 control-label"><b><span style="color:red; font-size:14px;">*</span>&nbsp;Email</b></label>
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(m => m.Email, new { placeholder = "", autocomplete = "off", required = "required", @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.Email)
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade in" id="tabLogs">
+                        <div class="row">
+                            <div style="margin-top:8px; margin-left:12px; margin-right:12px;">
+                                <table id="tableLogs" class="table table-hover table-condensed gridview" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th data-class="expand" style="text-align:center; width:10px;">&nbsp;</th>
+                                            <th data-hide="expand" style="text-align:center; width:180px;">User</th>
+                                            <th data-hide="phone">Message</th>
+                                            <th data-hide="phone" style="text-align:center; width:150px;">Time Stamp</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in DBUtilities.GetLogsPerUser(Model.Id))
+                                        {
+                                            <tr>
+                                                <td>&nbsp;</td>
+                                                <td>@DBUtilities.GetUsersFullNameById(item.CreatedByUserId)</td>
+                                                <td>@item.Message.ToString()</td>
+                                                <td style="text-align:center;">@item.CreatedOn.ToString()</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </article>
+    </div>
+</div>
+
+<!-- Reset password modal goes here -->
+<form asp-controller="Users"
+      asp-action="ResetPasswordEmail"
+      asp-anti-forgery="true"
+      data-ajax="true"
+      data-ajax-method="Post"
+      data-ajax-success="onSuccess"
+      data-ajax-update="#divmodalresetpasswordemail"
+      method="post"
+      class="form-horizontal">
+    <div class="modal" id="divmodalresetpasswordemail" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        @await Component.InvokeAsync("ResetPassword");
+    </div>
+</form>
+
+@if (User.IsInRole(Constants._rolePASAdministrator) || User.IsInRole(Constants._roleEditor))
+{
+    <!-- Delete modal goes here -->
+    <form asp-controller="Users"
+          asp-action="Purge"
+          asp-anti-forgery="true"
+          data-ajax="true"
+          data-ajax-method="Post"
+          data-ajax-success="onSuccess"
+          data-ajax-update="#divmodalpurge"
+          method="post"
+          class="form-horizontal">
+        <div class="modal" id="divmodalpurge" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+            @await Component.InvokeAsync("PurgeUser");
+        </div>
+    </form>
+}

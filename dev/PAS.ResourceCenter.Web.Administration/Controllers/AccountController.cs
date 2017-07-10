@@ -1,22 +1,20 @@
-﻿#region Using
-
-using System.Linq;
-using System.Security.Claims;
-using System.Security.Principal;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
+using PAS.ResourceCenter.Library.DataAccess.DTO;
+using PAS.ResourceCenter.Web.Administration.Common;
 using PAS.ResourceCenter.Web.Administration.Models;
 using PAS.ResourceCenter.Web.Administration.ViewModels.Account;
-
-#endregion
+using System.Linq;
+using System.Security.Principal;
+using System.Threading.Tasks;
 
 namespace PAS.ResourceCenter.Web.Administration.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "pasadministrator,pasreadonlyuser,editor")]
     public class AccountController : Controller
     {
         private readonly ILogger _logger;
@@ -29,24 +27,18 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<AccountController>();
         }
-
-        //
-        // GET: /Account/Login
+        
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null)
         {
-            // We do not want to use any existing identity information
             await EnsureLoggedOut();
 
-            // Store the originating URL so we can attach it to a form field
             var viewModel = new LoginViewModel { ReturnUrl = returnUrl };
 
             return View(viewModel);
         }
 
-        //
-        // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -57,8 +49,6 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, set lockoutOnFailure: true
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
 
             if (result.Succeeded)
@@ -84,24 +74,18 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
 
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
 
-            // If we get to this point, something failed, redisplay form and trigger the error summary
             return View(model);
         }
 
-        //
-        // GET: /Account/Register
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Register()
         {
-            // We do not want to use any existing identity information
             await EnsureLoggedOut();
 
             return View(new RegisterViewModel());
         }
 
-        //
-        // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -120,42 +104,46 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
 
             if (result.Succeeded)
             {
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
-                // Send an email with this link
-                //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
-                //    "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
                 await _signInManager.SignInAsync(user, false);
-                _logger.LogInformation(3, "User created a new account with password.");
+
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
 
             AddErrors(result);
 
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 
-        // GET: /account/error
         [AllowAnonymous]
         public async Task<IActionResult> Error()
         {
-            // We do not want to use any existing identity information
             await EnsureLoggedOut();
 
             return View();
         }
 
-        //
-        // POST: /Account/LogOff
+        [AllowAnonymous]
+        public async Task<IActionResult> AccessDenied()
+        {
+            await EnsureLoggedOut();
+
+            return View();
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> EmailChanged()
+        {
+            await EnsureLoggedOut();
+
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
         {
             await _signInManager.SignOutAsync();
 
-            // Clear the principal to ensure the user does not retain any authentication
             HttpContext.User = new GenericPrincipal(new GenericIdentity(string.Empty), null);
 
             _logger.LogInformation(4, "User logged out.");
@@ -163,106 +151,6 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
             return RedirectToLocal();
         }
 
-        //
-        // POST: /Account/ExternalLogin
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public IActionResult ExternalLogin(string provider, string returnUrl = null)
-        {
-            // Request a redirect to the external login provider.
-            var redirectUrl = Url.Action("ExternalLoginCallback", "Account", new
-            {
-                ReturnUrl = returnUrl
-            });
-            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
-            return new ChallengeResult(provider, properties);
-        }
-
-        //
-        // GET: /Account/ExternalLoginCallback
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null)
-        {
-            var info = await _signInManager.GetExternalLoginInfoAsync();
-            if (info == null)
-            {
-                return RedirectToAction(nameof(Login));
-            }
-
-            // Sign in the user with this external login provider if the user already has a login.
-            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
-            if (result.Succeeded)
-            {
-                _logger.LogInformation(5, "User logged in with {Name} provider.", info.LoginProvider);
-                return RedirectToLocal(returnUrl);
-            }
-            if (result.RequiresTwoFactor)
-            {
-                return RedirectToAction(nameof(SendCode), new
-                {
-                    ReturnUrl = returnUrl
-                });
-            }
-            if (result.IsLockedOut)
-            {
-                return View("Lockout");
-            }
-            // If the user does not have an account, then ask the user to create an account.
-            ViewData["ReturnUrl"] = returnUrl;
-            ViewData["LoginProvider"] = info.LoginProvider;
-            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-            return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel
-            {
-                Email = email
-            });
-        }
-
-        //
-        // POST: /Account/ExternalLoginConfirmation
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl = null)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction(nameof(HomeController.Index), "Manage");
-            }
-
-            if (ModelState.IsValid)
-            {
-                // Get the information about the user from the external login provider
-                var info = await _signInManager.GetExternalLoginInfoAsync();
-                if (info == null)
-                {
-                    return View("ExternalLoginFailure");
-                }
-                var user = new ApplicationUser
-                {
-                    UserName = model.Email,
-                    Email = model.Email
-                };
-                var result = await _userManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    result = await _userManager.AddLoginAsync(user, info);
-                    if (result.Succeeded)
-                    {
-                        await _signInManager.SignInAsync(user, false);
-                        _logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
-                        return RedirectToLocal(returnUrl);
-                    }
-                }
-                AddErrors(result);
-            }
-
-            ViewData["ReturnUrl"] = returnUrl;
-            return View(model);
-        }
-
-        // GET: /Account/ConfirmEmail
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string userId, string code)
@@ -280,20 +168,15 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
-        //
-        // GET: /Account/ForgotPassword
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ForgotPassword()
         {
-            // We do not want to use any existing identity information
             await EnsureLoggedOut();
 
             return View();
         }
 
-        //
-        // POST: /Account/ForgotPassword
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -304,43 +187,49 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                 var user = await _userManager.FindByNameAsync(model.Email);
                 if (user == null || !await _userManager.IsEmailConfirmedAsync(user))
                 {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+                    ModelState.AddModelError(string.Empty, "Email does not exists.");
+
+                    return View();
                 }
 
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
-                // Send an email with this link
-                //var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                //var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                //await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-                //   "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
-                //return View("ForgotPasswordConfirmation");
+                string code = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+                var callbackUrl =
+                    Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Scheme);
+
+                if (Email.SendCredentials(
+                        user.Email,
+                        user.Email,
+                        user.FirstName + " " + user.LastName,
+                        callbackUrl) == Common.Email.Result.Error)
+                {
+                    return RedirectToAction("Error", "Account");
+                }
+
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 
-        //
-        // GET: /Account/ForgotPasswordConfirmation
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult ForgotPasswordConfirmation()
+        public async Task<IActionResult> ForgotPasswordConfirmation()
         {
+            await EnsureLoggedOut();
+
             return View();
         }
 
-        //
-        // GET: /Account/ResetPassword
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult ResetPassword(string code = null)
+        public async Task<IActionResult> ResetPassword(string code = null)
         {
+            await EnsureLoggedOut();
+
             return code == null ? View("Error") : View();
         }
 
-        //
-        // POST: /Account/ResetPassword
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -350,23 +239,24 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
             {
                 return View(model);
             }
+
             var user = await _userManager.FindByNameAsync(model.Email);
             if (user == null)
             {
-                // Don't reveal that the user does not exist
-                return RedirectToAction(nameof(ResetPasswordConfirmation), "Account");
+                return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
+
             var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
             if (result.Succeeded)
             {
-                return RedirectToAction(nameof(ResetPasswordConfirmation), "Account");
+                return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
+
             AddErrors(result);
+
             return View();
         }
 
-        //
-        // GET: /Account/ResetPasswordConfirmation
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ResetPasswordConfirmation()
@@ -374,8 +264,6 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
             return View();
         }
 
-        //
-        // GET: /Account/SendCode
         [HttpGet]
         [AllowAnonymous]
         public async Task<ActionResult> SendCode(string returnUrl = null, bool rememberMe = false)
@@ -385,12 +273,14 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
             {
                 return View("Error");
             }
+
             var userFactors = await _userManager.GetValidTwoFactorProvidersAsync(user);
             var factorOptions = userFactors.Select(purpose => new SelectListItem
             {
                 Text = purpose,
                 Value = purpose
             }).ToList();
+
             return View(new SendCodeViewModel
             {
                 Providers = factorOptions,
@@ -418,9 +308,33 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
 
         private async Task EnsureLoggedOut()
         {
-            // If the request is (still) marked as authenticated we send the user to the logout action
             if (User.Identity.IsAuthenticated)
                 await LogOff();
+        }
+                
+        public ActionResult FullName()
+        {
+            string fullName = string.Empty;
+
+            if (HttpContext.Session.GetString(Constants._valueUserFullName) != null)
+            {
+                fullName = HttpContext.Session.GetString(Constants._valueUserFullName).ToString();
+                HttpContext.Session.SetString(Constants._valueUserFullName, fullName);
+            }
+            else
+            {
+                var result = UsersDto.Select(x => x.UserName.Contains(User.Identity.Name));
+                if (result.Status == Library.DataAccess.Responses.StatusCodes.OK)
+                {
+                    if (result.Items.Count > 0)
+                    {
+                        fullName = (result.First().FirstName.Trim() + " " + result.First().LastName.Trim()).Trim();
+                        HttpContext.Session.SetString(Constants._valueUserFullName, fullName);
+                    }
+                }
+            }
+
+            return Json(new { fullName = fullName });
         }
     }
 }

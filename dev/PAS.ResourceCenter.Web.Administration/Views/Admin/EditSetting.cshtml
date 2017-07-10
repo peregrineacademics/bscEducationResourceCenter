@@ -1,0 +1,115 @@
+﻿@model PAS.ResourceCenter.Web.Administration.ViewModels.Admin.SettingViewModel
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" onclick="clearData();">
+                &times;
+            </button>
+            <h4 class="modal-title">@Model.DisplayName.ToString()&nbsp;(Edit)</h4>
+        </div>
+        <div class="modal-body no-padding">
+            <div class="smart-form">
+                @Html.HiddenFor(m => m.Id)
+                @Html.HiddenFor(m => m.Name)
+                @Html.HiddenFor(m => m.DisplayName)
+                @Html.HiddenFor(m => m.Password)
+                @Html.HiddenFor(m => m.Boolean)
+                @Html.HiddenFor(m => m.Collection)
+                @Html.HiddenFor(m => m.Notes)
+                @Html.ValidationBootstrap()
+                <fieldset>
+                    <section>
+                        <div class="row">
+                            <div class="col" style="width:100%;">
+                                @if (Model.Collection)
+                                {
+                                    <label class="input">
+                                        <i class="icon-append fa fa-pencil-square-o"></i>
+                                        @Html.TextBoxFor(m => m.Value1, new { placeholder = "Value 1", autocomplete = "off", @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Value1)
+                                    </label>
+                                    <label class="input" style="margin-top:3px;">
+                                        <i class="icon-append fa fa-pencil-square-o"></i>
+                                        @Html.TextBoxFor(m => m.Value2, new { placeholder = "Value 2", autocomplete = "off", @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Value2)
+                                    </label>
+                                    <label class="input" style="margin-top:3px;">
+                                        <i class="icon-append fa fa-pencil-square-o"></i>
+                                        @Html.TextBoxFor(m => m.Value3, new { placeholder = "Value 3", autocomplete = "off", @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Value3)
+                                    </label>
+                                    <label class="input" style="margin-top:3px;">
+                                        <i class="icon-append fa fa-pencil-square-o"></i>
+                                        @Html.TextBoxFor(m => m.Value4, new { placeholder = "Value 4", autocomplete = "off", @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Value4)
+                                    </label>
+                                    <label class="input" style="margin-top:3px;">
+                                        <i class="icon-append fa fa-pencil-square-o"></i>
+                                        @Html.TextBoxFor(m => m.Value5, new { placeholder = "Value 5", autocomplete = "off", @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Value5)
+                                    </label>
+                                    <label class="input" style="margin-top:3px;">
+                                        <i class="icon-append fa fa-pencil-square-o"></i>
+                                        @Html.TextBoxFor(m => m.Value6, new { placeholder = "Value 6", autocomplete = "off", @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Value6)
+                                    </label>
+                                    <label class="input" style="margin-top:3px;">
+                                        <i class="icon-append fa fa-pencil-square-o"></i>
+                                        @Html.TextBoxFor(m => m.Value7, new { placeholder = "Value 7", autocomplete = "off", @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Value7)
+                                    </label>
+                                    <label class="input" style="margin-top:3px;">
+                                        <i class="icon-append fa fa-pencil-square-o"></i>
+                                        @Html.TextBoxFor(m => m.Value8, new { placeholder = "Value 8", autocomplete = "off", @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Value8)
+                                    </label>
+                                }
+                                else if (Model.Password)
+                                {
+                                    <label class="input">
+                                        <i class="icon-append fa fa-pencil-square-o"></i>
+                                        @Html.PasswordFor(m => m.Value1, new { placeholder = "", autocomplete = "off", @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Value1)
+                                    </label>
+                                }
+                                else if (Model.Boolean)
+                                {
+                                    @Html.DropDownListFor(
+                                        m => m.Value1,
+                                        PAS.ResourceCenter.Web.Administration.Common.MiscUtilities.GetTrueFalse(),
+                                        new { @class = "form-control", @style = "width:100%" })
+                                    @Html.ValidationMessageFor(m => m.Value1)
+                                }
+                                else
+                                {
+                                    <label class="input">
+                                        <i class="icon-append fa fa-pencil-square-o"></i>
+                                        @Html.TextBoxFor(m => m.Value1, new { placeholder = "", autocomplete = "off", @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Value1)
+                                    </label>
+                                }
+                            </div>
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.Notes))
+                        {
+                            <div class="row">
+                                <div class="col" style="width:100%;">
+                                    <label class="input" style="margin-top:4px;">
+                                        (<i>Notes: @Model.Notes</i>)
+                                    </label>
+                                </div>
+                            </div>
+                        }
+                    </section>
+                </fieldset>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="clearData();">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>

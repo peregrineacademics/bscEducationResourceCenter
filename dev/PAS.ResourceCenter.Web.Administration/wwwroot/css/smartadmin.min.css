@@ -23734,7 +23734,7 @@ img.away {
 .notification-body {
     padding: 0 0 0 3px;
     margin: 0;
-    list-style: none
+    list-style: none;
 }
 
     .notification-body > li {
@@ -39177,20 +39177,23 @@ body.smart-style-6.menu-on-top aside#left-panel, body.smart-style-6.menu-on-top 
     }
 }
 
-.smart-style-bbw body, body.smart-style-bbw {
+.smart-style-erc body, body.smart-style-erc {
     background: #fff !important;
-    font-family: Arial,sans-serif
+    font-family: Arial,Helvetica,Sans-Serif;
+    font-size: 14px;
 }
 
-.smart-style-bbw #logo img {
-    height: 40px;
-    width: auto;
+.smart-style-erc #logo img {
     padding-left: 20px;
-    margin-right: 12px;
-    margin-top: -8px
+    margin-right: 10px;
+    margin-top: -10px
 }
 
-.smart-style-bbw #header {
+.smart-style-erc .select2-hidden-accessible {
+    display:none;
+}
+
+.smart-style-erc #header {
     background-color: #ffffff;
     background-image: -moz-linear-gradient(top,#ffffff,#dcdcdc);
     background-image: -webkit-gradient(linear,0 0,0 100%,from(#ffffff),to(#dcdcdc));
@@ -39199,15 +39202,15 @@ body.smart-style-6.menu-on-top aside#left-panel, body.smart-style-6.menu-on-top 
     background-image: linear-gradient(to bottom,#ffffff,#dcdcdc)
 }
 
-.smart-style-bbw #ribbon {
+.smart-style-erc #ribbon {
     background: #fff
 }
 
-.smart-style-bbw #hide-menu i {
+.smart-style-erc #hide-menu i {
     color: #8ec640 !important
 }
 
-.smart-style-bbw .header-dropdown-list > li > .dropdown-toggle {
+.smart-style-erc .header-dropdown-list > li > .dropdown-toggle {
     display: block;
     background: rgba(0,0,0,.2);
     padding: 2px 7px 3px;
@@ -39215,20 +39218,20 @@ body.smart-style-6.menu-on-top aside#left-panel, body.smart-style-6.menu-on-top 
     margin-top: 14px
 }
 
-.smart-style-bbw .header-search > input[type=text] {
+.smart-style-erc .header-search > input[type=text] {
     border-color: #f2f2f2
 }
 
-.smart-style-bbw .header-search > button {
+.smart-style-erc .header-search > button {
     color: #df9b45
 }
 
-.smart-style-bbw aside {
-    background: #8ec640;
+.smart-style-erc aside {
+    background: #ffffff;
     border-right: 1px solid #eee
 }
 
-.smart-style-bbw .login-info {
+.smart-style-erc .login-info {
     border-bottom: 1px solid #e2e2e2;
     background: #fff;
     box-shadow: none;
@@ -39236,15 +39239,15 @@ body.smart-style-6.menu-on-top aside#left-panel, body.smart-style-6.menu-on-top 
     -moz-box-shadow: none
 }
 
-    .smart-style-bbw .login-info span {
+    .smart-style-erc .login-info span {
         border-bottom: none
     }
 
-    .smart-style-bbw .login-info a span {
+    .smart-style-erc .login-info a span {
         color: #444 !important
     }
 
-.smart-style-bbw nav > ul > li {
+.smart-style-erc nav > ul > li {
     background-color: #f2f2f2;
     background-image: -moz-linear-gradient(top,#f9f9f9,#f2f2f2);
     background-image: -webkit-gradient(linear,0 0,0 100%,from(#f9f9f9),to(#f2f2f2));
@@ -39254,175 +39257,175 @@ body.smart-style-6.menu-on-top aside#left-panel, body.smart-style-6.menu-on-top 
     border-bottom: 1px solid #dfdfdf
 }
 
-    .smart-style-bbw nav > ul > li > a {
+    .smart-style-erc nav > ul > li > a {
         padding: 12px 10px 12px 11px;
         font-size: 13px
     }
 
-        .smart-style-bbw nav > ul > li > a b {
+        .smart-style-erc nav > ul > li > a b {
             top: 12px
         }
 
-        .smart-style-bbw nav > ul > li > a > i {
+        .smart-style-erc nav > ul > li > a > i {
             color: #8ec640;
             font-size: 20px
         }
 
-    .smart-style-bbw nav > ul > li.active > a:before {
+    .smart-style-erc nav > ul > li.active > a:before {
         top: 10px !important
     }
 
-    .smart-style-bbw nav > ul > li.open {
+    .smart-style-erc nav > ul > li.open {
         border-left: 4px solid #8ec640
     }
 
-        .smart-style-bbw nav > ul > li.open > a {
+        .smart-style-erc nav > ul > li.open > a {
             padding-left: 7px
         }
 
-        .smart-style-bbw nav > ul > li.open ul li > a, .smart-style-bbw nav > ul > li.open > ul > li > a {
+        .smart-style-erc nav > ul > li.open ul li > a, .smart-style-erc nav > ul > li.open > ul > li > a {
             padding-left: 38px
         }
 
-.smart-style-bbw nav ul li.active > a:before {
+.smart-style-erc nav ul li.active > a:before {
     top: 6px;
     color: #bbb
 }
 
-.smart-style-bbw nav ul li.active > a {
+.smart-style-erc nav ul li.active > a {
     font-weight: 700
 }
 
-.smart-style-bbw nav ul ul {
+.smart-style-erc nav ul ul {
     background: 0 0
 }
 
-    .smart-style-bbw nav ul ul li > a {
+    .smart-style-erc nav ul ul li > a {
         font-size: 13px
     }
 
-.smart-style-bbw nav ul li a:hover {
+.smart-style-erc nav ul li a:hover {
     background: rgba(0,0,0,.05) !important
 }
 
-.smart-style-bbw .superbox-list.active:before {
+.smart-style-erc .superbox-list.active:before {
     color: #3d3b39
 }
 
-.smart-style-bbw .active + .ajax-dropdown {
+.smart-style-erc .active + .ajax-dropdown {
     -webkit-box-shadow: 1px 14px 16px rgba(61,35,14,.55);
     box-shadow: 1px 14px 16px rgba(61,35,14,.55)
 }
 
-.smart-style-bbw .dropdown-menu {
+.smart-style-erc .dropdown-menu {
     border-radius: 0;
     border-bottom: 2px solid #adadad;
-    background: #fddfb3
+    background: #ffffff
 }
 
-    .smart-style-bbw .dropdown-menu > li > a {
+    .smart-style-erc .dropdown-menu > li > a {
         color: #4e361b
     }
 
-    .smart-style-bbw .dropdown-menu .divider {
+    .smart-style-erc .dropdown-menu .divider {
         background-color: #ebc7a6
     }
 
-.smart-style-bbw .dropdown-menu-large .dropdown-header {
+.smart-style-erc .dropdown-menu-large .dropdown-header {
     color: #5c391e
 }
 
-.smart-style-bbw .has-warning .form-control {
+.smart-style-erc .has-warning .form-control {
     border-color: #c09853 !important
 }
 
-.smart-style-bbw .has-error .form-control {
+.smart-style-erc .has-error .form-control {
     border-color: #b94a48 !important
 }
 
-.smart-style-bbw .has-success .form-control {
+.smart-style-erc .has-success .form-control {
     border-color: #468847 !important
 }
 
-.smart-style-bbw #shortcut {
+.smart-style-erc #shortcut {
     background-color: rgba(25,16,6,.85)
 }
 
-.smart-style-bbw .ui-chatbox-titlebar {
+.smart-style-erc .ui-chatbox-titlebar {
     background-color: #66605b !important
 }
 
-    .smart-style-bbw .ui-chatbox-titlebar.ui-state-focus {
+    .smart-style-erc .ui-chatbox-titlebar.ui-state-focus {
         background-color: #4b433c !important
     }
 
-.smart-style-bbw #ribbon .breadcrumb, .smart-style-bbw #ribbon .breadcrumb a {
+.smart-style-erc #ribbon .breadcrumb, .smart-style-erc #ribbon .breadcrumb a {
     color: #7c7c7c !important
 }
 
-    .smart-style-bbw #ribbon .breadcrumb li:last-child, .smart-style-bbw #ribbon .breadcrumb > .active {
+    .smart-style-erc #ribbon .breadcrumb li:last-child, .smart-style-erc #ribbon .breadcrumb > .active {
         color: #5f5f5f
     }
 
-.smart-style-bbw.fixed-ribbon #ribbon {
+.smart-style-erc.fixed-ribbon #ribbon {
     box-shadow: 0 .0625em .3125em rgba(0,0,0,.35)
 }
 
-.smart-style-bbw #logo-group span#activity, .smart-style-bbw .btn-header > :first-child > a {
+.smart-style-erc #logo-group span#activity, .smart-style-erc .btn-header > :first-child > a {
     background-color: #f25a2b;
     color: #8ec640 !important;
     border: 1px solid #cccccc;
 }
 
-    .smart-style-bbw #logo-group span#activity:active, .smart-style-bbw #logo-group span#activity:hover, .smart-style-bbw .btn-header > :first-child > a:active, .smart-style-bbw .btn-header > :first-child > a:hover {
+    .smart-style-erc #logo-group span#activity:active, .smart-style-erc #logo-group span#activity:hover, .smart-style-erc .btn-header > :first-child > a:active, .smart-style-erc .btn-header > :first-child > a:hover {
         background-color: #8ec640;
     }
 
-.smart-style-bbw .header-dropdown-list > li > .dropdown-toggle, .smart-style-bbw .project-context > :first-child, .smart-style-bbw .project-selector {
+.smart-style-erc .header-dropdown-list > li > .dropdown-toggle, .smart-style-erc .project-context > :first-child, .smart-style-erc .project-selector {
     color: #8ec640;
     text-shadow: #985813 0 -1px
 }
 
-.smart-style-bbw nav ul li a, .smart-style-bbw nav ul li.open > a, .smart-style-bbw nav ul li.open > a b {
+.smart-style-erc nav ul li a, .smart-style-erc nav ul li.open > a, .smart-style-erc nav ul li.open > a b {
     color: #444 !important
 }
 
-.smart-style-bbw nav > ul ul li::before, .smart-style-bbw nav > ul > li > ul::before {
+.smart-style-erc nav > ul ul li::before, .smart-style-erc nav > ul > li > ul::before {
     border: none
 }
 
-.smart-style-bbw .page-footer, .smart-style-bbw .superbox-show {
+.smart-style-erc .page-footer, .smart-style-erc .superbox-show {
     background: #3d3b39
 }
 
-.smart-style-bbw.minified nav > ul > li {
+.smart-style-erc.minified nav > ul > li {
     border-bottom: 1px solid #e9e4e4;
     border-top: 1px solid #fff
 }
 
-    .smart-style-bbw.minified nav > ul > li.open ul li > a {
+    .smart-style-erc.minified nav > ul > li.open ul li > a {
         padding-left: 14px
     }
 
-    .smart-style-bbw.minified nav > ul > li > ul, .smart-style-bbw.minified nav > ul > li > ul > li > ul > li {
+    .smart-style-erc.minified nav > ul > li > ul, .smart-style-erc.minified nav > ul > li > ul > li > ul > li {
         background-color: rgba(69,69,69,.9)
     }
 
-.smart-style-bbw.minified nav ul li a, .smart-style-bbw.minified nav ul li.open > a, .smart-style-bbw.minified nav ul li.open > a b {
+.smart-style-erc.minified nav ul li a, .smart-style-erc.minified nav ul li.open > a, .smart-style-erc.minified nav ul li.open > a b {
     color: #fff !important
 }
 
-.smart-style-bbw .dropdown-menu > .active > a, .smart-style-bbw .dropdown-menu > .active > a:hover, .smart-style-bbw .dropdown-menu > li > a:focus, .smart-style-bbw .dropdown-menu > li > a:hover, .smart-style-bbw .tt-suggestion.tt-is-under-cursor {
-    background-color: #ec9519;
+.smart-style-erc .dropdown-menu > .active > a, .smart-style-erc .dropdown-menu > .active > a:hover, .smart-style-erc .dropdown-menu > li > a:focus, .smart-style-erc .dropdown-menu > li > a:hover, .smart-style-erc .tt-suggestion.tt-is-under-cursor {
+    background-color: #008d95;
     color: #fff
 }
 
-.smart-style-bbw .dropdown-menu-large > li ul > li > a:focus, .smart-style-bbw .dropdown-menu-large > li ul > li > a:hover {
+.smart-style-erc .dropdown-menu-large > li ul > li > a:focus, .smart-style-erc .dropdown-menu-large > li ul > li > a:hover {
     border-radius: 3px;
     background-color: #f1b686
 }
 
-.smart-style-bbw input:not([type]), .smart-style-bbw input[type=color], .smart-style-bbw input[type=email], .smart-style-bbw input[type=number], .smart-style-bbw input[type=password], .smart-style-bbw input[type=tel], .smart-style-bbw input[type=text], .smart-style-bbw input[type=url], .smart-style-bbw textarea {
+.smart-style-erc input:not([type]), .smart-style-erc input[type=color], .smart-style-erc input[type=email], .smart-style-erc input[type=number], .smart-style-erc input[type=password], .smart-style-erc input[type=tel], .smart-style-erc input[type=text], .smart-style-erc input[type=url], .smart-style-erc textarea {
     border-top-color: #a3a3a3;
     border-left-color: #a3a3a3;
     border-bottom-color: #ccc;
@@ -39433,141 +39436,146 @@ body.smart-style-6.menu-on-top aside#left-panel, body.smart-style-6.menu-on-top 
     color: #000
 }
 
-.smart-style-bbw .select2-container-multi .select2-choices .select2-search-field input, .smart-style-bbw .tt-hint {
+.smart-style-erc .select2-container-multi .select2-choices .select2-search-field input, .smart-style-erc .tt-hint {
     box-shadow: none !important;
     border: none !important
 }
 
-.smart-style-bbw .SmallBox span, .smart-style-bbw .bigBox span {
+.smart-style-erc .SmallBox span, .smart-style-erc .bigBox span {
     letter-spacing: 0
 }
 
-.smart-style-bbw.menu-on-top nav ul ul li > a {
+.smart-style-erc.menu-on-top nav ul ul li > a {
     color: inherit
 }
 
-.smart-style-bbw.menu-on-top nav ul ul li a {
+.smart-style-erc.menu-on-top nav ul ul li a {
     padding-left: 10px !important;
     font-size: 13px
 }
 
-.smart-style-bbw.menu-on-top nav ul ul li:hover > a {
+.smart-style-erc.menu-on-top nav ul ul li:hover > a {
     color: #fff
 }
 
-.smart-style-bbw.menu-on-top nav ul ul .active > a {
+.smart-style-erc.menu-on-top nav ul ul .active > a {
     color: #333 !important
 }
 
-.smart-style-bbw.menu-on-top nav ul > li > ul {
+.smart-style-erc.menu-on-top nav ul > li > ul {
     left: -2px
 }
 
-.smart-style-bbw.menu-on-top nav > ul > li > a:hover {
+.smart-style-erc.menu-on-top nav > ul > li > a:hover {
     background: #fff !important
 }
 
-.smart-style-bbw.menu-on-top nav > ul > li > a:after {
+.smart-style-erc.menu-on-top nav > ul > li > a:after {
     color: #8aa1b3 !important
 }
 
-.smart-style-bbw.menu-on-top aside {
+.smart-style-erc.menu-on-top aside {
     background: inherit
 }
 
-    .smart-style-bbw.menu-on-top aside#left-panel {
+    .smart-style-erc.menu-on-top aside#left-panel {
         -webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,.25);
         box-shadow: 0 2px 4px 0 rgba(0,0,0,.25);
         border-bottom: 1px solid #fff;
         border-top: 1px solid #fff
     }
 
-        .smart-style-bbw.menu-on-top aside#left-panel nav > ul > li {
+        .smart-style-erc.menu-on-top aside#left-panel nav > ul > li {
             border-right: 1px solid #e2e2e2;
             border-left: 1px solid #fff
         }
 
-            .smart-style-bbw.menu-on-top aside#left-panel nav > ul > li > a {
+            .smart-style-erc.menu-on-top aside#left-panel nav > ul > li > a {
                 text-shadow: none !important;
                 font-size: 13px;
                 padding: 10px 9px !important;
                 border: none !important
             }
 
-            .smart-style-bbw.menu-on-top aside#left-panel nav > ul > li:hover {
+            .smart-style-erc.menu-on-top aside#left-panel nav > ul > li:hover {
                 background: #fff
             }
 
-.smart-style-bbw.menu-on-top nav ul ul, .smart-style-bbw.menu-on-top nav ul ul ul {
+.smart-style-erc.menu-on-top nav ul ul, .smart-style-erc.menu-on-top nav ul ul ul {
     border-color: #e2e2e2
 }
 
-    .smart-style-bbw.menu-on-top nav ul ul li a:hover, .smart-style-bbw.menu-on-top nav ul ul li:hover > a, .smart-style-bbw.menu-on-top nav ul ul ul li a:hover {
+    .smart-style-erc.menu-on-top nav ul ul li a:hover, .smart-style-erc.menu-on-top nav ul ul li:hover > a, .smart-style-erc.menu-on-top nav ul ul ul li a:hover {
         background: rgba(0,0,0,.05)
     }
 
-    .smart-style-bbw.menu-on-top nav ul ul li a, .smart-style-bbw.menu-on-top nav ul ul ul li a {
+    .smart-style-erc.menu-on-top nav ul ul li a, .smart-style-erc.menu-on-top nav ul ul ul li a {
         color: #d8dee5
     }
 
-        .smart-style-bbw.menu-on-top nav ul ul li a:hover, .smart-style-bbw.menu-on-top nav ul ul ul li a:hover {
+        .smart-style-erc.menu-on-top nav ul ul li a:hover, .smart-style-erc.menu-on-top nav ul ul ul li a:hover {
             color: #fff
         }
 
-    .smart-style-bbw.menu-on-top nav ul ul li:hover > a:after, .smart-style-bbw.menu-on-top nav > ul ul > li a:after, .smart-style-bbw.menu-on-top nav > ul ul > li a:hover:after, .smart-style-bbw.menu-on-top nav > ul > li > a:after {
+    .smart-style-erc.menu-on-top nav ul ul li:hover > a:after, .smart-style-erc.menu-on-top nav > ul ul > li a:after, .smart-style-erc.menu-on-top nav > ul ul > li a:hover:after, .smart-style-erc.menu-on-top nav > ul > li > a:after {
         color: inherit
     }
 
-    .smart-style-bbw.menu-on-top nav ul ul .active > a:hover, .smart-style-bbw.menu-on-top nav ul ul li.active:hover > a {
+    .smart-style-erc.menu-on-top nav ul ul .active > a:hover, .smart-style-erc.menu-on-top nav ul ul li.active:hover > a {
         color: #333 !important
     }
 
-.smart-style-bbw .btn-primary {
+.smart-style-erc .btn-primary {
     background-color: #008d95;
     border-color: #007b8b
 }
 
-.smart-style-bbw .btn-info {
+.smart-style-erc .btn-info {
     background-color: #00aaab;
     border-color: #008d95
 }
 
-.smart-style-bbw .btn-success {
+.smart-style-erc .btn-success {
     background-color: #96bf48;
     border-color: #84a83e
 }
 
-.smart-style-bbw .btn-danger {
+.smart-style-erc .btn-danger {
     background-color: #c9101a;
     border-color: #ca4862
 }
 
-.smart-style-bbw .btn-warning {
+.smart-style-erc .btn-warning {
     background-color: #e2b14a;
     border-color: #c99d42
 }
 
-.smart-style-bbw .field-background {
+.smart-style-erc .field-background {
     background-color: #f6f6f6;
     font-size: 12px;
 }
 
-.smart-style-bbw .field-validation-error {
+.smart-style-erc .field-validation-error {
     color: #f25a2b;
     font-size: 12px;
 }
 
-.smart-style-bbw .field-validation-valid {
+.smart-style-erc .field-validation-valid {
     display: none;
 }
 
+.smart-style-erc p {
+    font-family: "Open Sans",Arial,Helvetica,Sans-Serif;
+    font-size: 14px;
+}
+
 @media(max-width:979px) {
-    .smart-style-bbw #content {
+    .smart-style-erc #content {
         padding-left: 5px;
         padding-right: 5px
     }
 
-    .smart-style-bbw #ribbon {
+    .smart-style-erc #ribbon {
         margin-left: 0;
         margin-right: 0;
         margin-top: 0;

@@ -1,0 +1,163 @@
+﻿@using PAS.ResourceCenter.Web.Administration.ViewModels.ReviewProperties
+@model PAS.ResourceCenter.Web.Administration.ViewModels.ReviewProperties.DisciplinesViewModel
+
+<div id="content">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-default dropdown-toggle pull-right" data-toggle="dropdown" style="margin-top: 8px; padding:2px 15px;">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="@Url.Action("Disciplines", "ReviewProperties")"><i class="fa fa-refresh"></i>&nbsp;&nbsp;Refresh</a></li>
+                </ul>
+                <a href="#" data-toggle="modal" data-target="#divmodalcreatediscipline" class="btn btn-default pull-right" style="margin-top: 8px; padding:2px 15px;">
+                    <i class="fa fa-plus-circle" style="color:#8ec640;"></i>&nbsp;Create New
+                </a>
+                <!-- Create modal goes here -->
+                <form asp-controller="ReviewProperties"
+                      asp-action="CreateDiscipline"
+                      asp-anti-forgery="true"
+                      data-ajax="true"
+                      data-ajax-method="Post"
+                      data-ajax-success="onSuccess"
+                      data-ajax-update="#divmodalcreatediscipline"
+                      method="post"
+                      class="form-horizontal">
+                    <div class="modal" id="divmodalcreatediscipline" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                        @await Component.InvokeAsync("CreateDiscipline");
+                    </div>
+                </form>
+            </div>
+            <h1 class="page-title">
+                <i class="fa-fw fa fa-file-text"></i> Disciplines & Topics
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div style="margin-left:12px; margin-right:12px;">
+            <table id="tableProperties" class="table table-hover table-condensed gridview" style="table-layout:fixed; width:100%; font-size:13px;">
+                <thead>
+                    <tr>
+                        <th style="width:52px; min-width:52px;"></th>
+                        <th data-class="expand" style="width:280px; min-width:280px;">Discipline</th>
+                        <th data-hide="expand">Topics</th>
+                        <th data-hide="phone" style="text-align:center; width:70px;">Enabled</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DisciplineViewModel property in Model.Disciplines)
+                    {
+                        <tr>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#" data-toggle="modal" data-target="#@property.DivEditId" class="btn btn-default btn-xs">&nbsp;<i class="fa fa-pencil"></i></a>
+                                    <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+                                        <span class="caret" />
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="@Url.Action("Topics", "ReviewProperties", new { Id = property.Id })"><i class="fa fa-list"></i>&nbsp;&nbsp;Topics</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-toggle="modal" data-target="#@property.DivPurgeId"><i class="fa fa-remove"></i>&nbsp;&nbsp;Purge</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- Edit modal goes here -->
+                                <form asp-controller="ReviewProperties"
+                                      asp-action="EditDiscipline"
+                                      asp-anti-forgery="true"
+                                      data-ajax="true"
+                                      data-ajax-method="Post"
+                                      data-ajax-success="onSuccess"
+                                      data-ajax-update="#@("divmodaleditdiscipline" + property.Id.ToString())"
+                                      method="post"
+                                      class="form-horizontal">
+                                    <div class="modal" id="@property.DivEditId" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                                        @await Component.InvokeAsync("EditDiscipline", new { Id = property.Id });
+                                    </div>
+                                </form>
+                                <!-- Purge modal goes here -->
+                                <form asp-controller="ReviewProperties"
+                                      asp-action="PurgeDiscipline"
+                                      asp-anti-forgery="true"
+                                      data-ajax="true"
+                                      data-ajax-method="Post"
+                                      data-ajax-success="onSuccess"
+                                      data-ajax-update="#@("divmodalpurgediscipline" + property.Id.ToString())"
+                                      method="post"
+                                      class="form-horizontal">
+                                    <div class="modal" id="@property.DivPurgeId" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                                        @await Component.InvokeAsync("PurgeDiscipline", new { Id = property.Id });
+                                    </div>
+                                </form>
+                            </td>
+                            <td>@property.Name.ToString()</td>
+                            <td>
+                                @{if (!string.IsNullOrEmpty(property.Topics.Trim()))
+                                    { <a href="@Url.Action("Topics", "ReviewProperties", new { Id = property.Id })">@property.Topics.ToString()</a> }
+                                    else
+                                    { <i><span>Click </span><a href="@Url.Action("Topics", "ReviewProperties", new { Id = property.Id })">here</a><span> to add a new topic.</span></i> }
+                                }
+                            </td>
+                            <td style="text-align:center;">
+                                @{if (property.Enabled)
+                                    { <i class="fa fa-check" style="color:green;" /> }
+                                    else
+                                    { <i class="fa fa-close" style="color:lightgray" /> }
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script type="text/javascript">
+    $(document).ready(function () {
+        /* // DOM Position key index //
+            l - Length changing (dropdown)
+            f - Filtering input (search)
+            t - The Table! (datatable)
+            i - Information (records)
+            p - Pagination (paging)
+            r - pRocessing
+            < and > - div elements
+            <"#id" and > - div with an id
+            <"class" and > - div with a class
+            <"#id.class" and > - div with an id and class
+        Also see: http://legacy.datatables.net/usage/features */
+
+        var responsiveHelperTable = undefined;
+
+        var breakpointDefinition = {
+            tablet: 4096,
+            phone: 480
+        };
+
+        $('#tableProperties').dataTable({
+            "sDom": "<'dt-toolbar'r>" +
+            "t" +
+            "",
+            "autoWidth": true,
+            "bPaginate": false,
+            "preDrawCallback": function () {
+                // Initialize the responsive datatables helper once.
+                if (!responsiveHelperTable) {
+                    responsiveHelperTable = new ResponsiveDatatablesHelper($('#tableProperties'), breakpointDefinition);
+                }
+            },
+            "rowCallback": function (nRow) {
+                responsiveHelperTable.createExpandIcon(nRow);
+            },
+            "drawCallback": function (oSettings) {
+                responsiveHelperTable.respond();
+            }
+        });
+    })
+</script>
+}

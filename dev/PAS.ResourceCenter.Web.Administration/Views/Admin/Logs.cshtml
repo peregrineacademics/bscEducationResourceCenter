@@ -1,0 +1,56 @@
+﻿<div id="content">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h1 class="page-title">
+                <i class="fa-fw fa fa-file-text-o"></i> Logs
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div style="margin-left:12px; margin-right:12px;">
+            <div id="divgriddata" style="font-size:13px;">
+                <!-- List contents goes here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="@Url.Content("~/jsx/gridpager.jsx")"></script>
+    <script src="@Url.Content("~/jsx/logsearch.jsx")"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#inputStartDate').datepicker({
+                dateFormat: 'MM dd, yy',
+                showStatus: true,
+                showWeeks: true,
+                currentText: 'Now',
+                autoSize: true,
+                gotoCurrent: true,
+                changeMonth: true,
+                changeYear: true,
+                showAnim: 'blind',
+                highlightWeek: true,
+                navigationAsDateFormat: true,
+                prevText: '<<',
+                nextText: '>>'
+            });
+
+            $('#inputEndDate').datepicker({
+                dateFormat: 'MM dd, yy',
+                showStatus: true,
+                showWeeks: true,
+                currentText: 'Now',
+                autoSize: true,
+                gotoCurrent: true,
+                changeMonth: true,
+                changeYear: true,
+                showAnim: 'blind',
+                highlightWeek: true,
+                navigationAsDateFormat: true,
+                prevText: '<<',
+                nextText: '>>'
+            });
+        });
+    </script>
+}

@@ -1,0 +1,123 @@
+﻿@using PAS.ResourceCenter.Web.Administration.Common
+
+@model PAS.ResourceCenter.Web.Administration.ViewModels.Users.UserViewModel
+
+<div id="content">
+    <div class="row">
+        <article class="col-sm-12 col-md-12 col-lg-12">
+            @using (Html.BeginForm("Create", "Users", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.Id)
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <h4 class="pull-left" style="margin-top:8px;">
+                            <i class="fa-fw fa fa-user"></i>
+                            <a href="@Url.Action("Index", "Users")">Users</a>&nbsp;/&nbsp;Create New
+                        </h4>
+                        <div class="btn-group pull-right" style="margin-top:6px;">
+                            <button type="submit" class="btn btn-primary">
+                                <span class="hidden-xs"><i class="fa fa-save"></i>&nbsp;&nbsp;Save</span>
+                                <span class="visible-xs"><i class="fa fa-save"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top:6px;"></div>
+                <ul id="tabDefault" class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#tabProfile" data-toggle="tab">Profile</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="tabProfile">
+                        <div class="row">
+                            <article class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-horizontal" style="margin:12px;">
+                                    @if (ViewBag.Message == Constants._valueSuccess)
+                                    {
+                                        <span class="help-block" style="color:green;"><i class="fa fa-info-circle"></i> @TempData[Constants._valueMessage].ToString()</span>
+                                    }
+                                    else if (ViewBag.Message == Constants._valueError)
+                                    {
+                                        <span class="help-block" style="color:red;"><i class="fa fa-warning"></i> @TempData[Constants._valueMessage].ToString()</span>
+                                    }
+                                    <fieldset>
+                                        <div class="form-group field-background">
+                                            <label class="col-md-2 control-label">Enabled</label>
+                                            <div class="col-md-2">
+                                                @Html.DropDownListFor(
+                                                    m => m.Enabled,
+                                                    MiscUtilities.GetYesNo(),
+                                                    new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.Enabled)
+                                            </div>
+                                        </div>
+                                        <div class="form-group field-background">
+                                            <label class="col-md-2 control-label">Role</label>
+                                            @if (User.IsInRole(Constants._rolePASAdministrator))
+                                            {
+                                                <div class="col-md-3">
+                                                    @Html.DropDownListFor(
+                                                        m => m.RoleName,
+                                                        MiscUtilities.GetRolesForUser(Constants._rolePASAdministrator),
+                                                        new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(m => m.RoleName)
+                                                </div>
+                                            }
+                                            else if (User.IsInRole(Constants._roleEditor))
+                                            {
+                                                <div class="col-md-3">
+                                                    @Html.DropDownListFor(
+                                                        m => m.RoleName,
+                                                        MiscUtilities.GetRolesForUser(Constants._roleEditor),
+                                                        new { @class = "form-control" }))
+                                                    @Html.ValidationMessageFor(m => m.RoleName)
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="form-group field-background">
+                                            <label class="col-md-2 control-label"><b><span style="color:red; font-size:14px;">*</span>&nbsp;Last Name</b></label>
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(m => m.LastName, new { placeholder = "", autocomplete = "off", required = "required", @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.LastName)
+                                            </div>
+                                        </div>
+                                        <div class="form-group field-background">
+                                            <label class="col-md-2 control-label field-background"><b><span style="color:red; font-size:14px;">*</span>&nbsp;First Name</b></label>
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(m => m.FirstName, new { placeholder = "", autocomplete = "off", required = "required", @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.FirstName)
+                                            </div>
+                                        </div>
+                                        <div class="form-group field-background">
+                                            <label class="col-md-2 control-label field-background">Middle Name</label>
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(m => m.MiddleName, new { placeholder = "", autocomplete = "off", @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.MiddleName)
+                                            </div>
+                                        </div>
+                                        <div class="form-group field-background">
+                                            <label class="col-md-2 control-label field-background">Title</label>
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(m => m.Title, new { placeholder = "Ex. Dean, Assistant Dean, Names", autocomplete = "off", @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.Title)
+                                            </div>
+                                        </div>
+                                        <div class="form-group field-background">
+                                            <label class="col-md-2 control-label"><b><span style="color:red; font-size:14px;">*</span>&nbsp;Email</b></label>
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(m => m.Email, new { placeholder = "", autocomplete = "off", required = "required", @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.Email)
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            }
+        </article>
+    </div>
+</div>
