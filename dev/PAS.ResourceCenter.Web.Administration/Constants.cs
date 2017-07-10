@@ -16,7 +16,7 @@
         public const string _valueFalse = "False";
 
         public const string _valueRolePASAdministrator = "PAS Admin";
-        public const string _valueRolePASReadonlyUser = "Read Only";
+        public const string _valueRolePASReadOnly = "Read Only";
         public const string _valueRoleEditor = "Editor";
         public const string _valueRoleReviewer = "Reviewer";
         public const string _valueRoleFacultyAdministrator = "Faculty Admin";
@@ -24,7 +24,7 @@
         public const string _valueRoleLearner = "Learner";
 
         public const string _rolePASAdministrator = "pasadministrator";
-        public const string _rolePASReadonlyUser = "pasreadonlyuser";
+        public const string _rolePASReadOnly = "pasreadonly";
         public const string _roleEditor = "editor";
         public const string _roleReviewer = "reviewer";
         public const string _roleFacultyAdministrator = "facultyadministrator";

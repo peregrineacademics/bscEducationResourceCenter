@@ -14,6 +14,7 @@ namespace PAS.ResourceCenter.Web.Administration.Models
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
+        public string ScreenName { get; set; }
         public string Title { get; set; }
         public bool IsEnabled { get; set; }
         public DateTime DateCreated { get; set; }

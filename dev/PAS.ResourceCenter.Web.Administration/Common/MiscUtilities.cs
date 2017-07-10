@@ -55,7 +55,7 @@ namespace PAS.ResourceCenter.Web.Administration.Common
                 listItems.Add(new SelectListItem() { Text = Constants._valueRoleFacultyAdministrator, Value = Constants._valueRoleFacultyAdministrator });
                 listItems.Add(new SelectListItem() { Text = Constants._valueRoleReviewer, Value = Constants._valueRoleReviewer });
                 listItems.Add(new SelectListItem() { Text = Constants._valueRoleEditor, Value = Constants._valueRoleEditor });
-                listItems.Add(new SelectListItem() { Text = Constants._valueRolePASReadonlyUser, Value = Constants._valueRolePASReadonlyUser });
+                listItems.Add(new SelectListItem() { Text = Constants._valueRolePASReadOnly, Value = Constants._valueRolePASReadOnly });
                 listItems.Add(new SelectListItem() { Text = Constants._valueRolePASAdministrator, Value = Constants._valueRolePASAdministrator });
             }
             else if (roleName == Constants._roleEditor)

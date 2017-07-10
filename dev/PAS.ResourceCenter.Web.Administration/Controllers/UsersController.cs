@@ -100,11 +100,11 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                                     case Constants._rolePASAdministrator:
                                         model.RoleName = Constants._valueRolePASAdministrator;
                                         break;
-                                    case Constants._rolePASReadonlyUser:
-                                        model.RoleName = Constants._valueRolePASReadonlyUser;
+                                    case Constants._rolePASReadOnly:
+                                        model.RoleName = Constants._valueRolePASReadOnly;
                                         break;
                                     case Constants._roleEditor:
-                                        model.RoleName = Constants._valueRolePASReadonlyUser;
+                                        model.RoleName = Constants._valueRoleEditor;
                                         break;
                                     case Constants._roleReviewer:
                                         model.RoleName = Constants._valueRoleReviewer;
@@ -141,7 +141,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                                     bAdd = true;
                                 }
                             }
-                            else if (User.IsInRole(Constants._rolePASReadonlyUser))
+                            else if (User.IsInRole(Constants._rolePASReadOnly))
                             {
                                 if (model.RoleName != Constants._valueRolePASAdministrator &&
                                     model.RoleName != Constants._valueRoleEditor)
@@ -262,11 +262,11 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                                     case Constants._rolePASAdministrator:
                                         model.RoleName = Constants._valueRolePASAdministrator;
                                         break;
-                                    case Constants._rolePASReadonlyUser:
-                                        model.RoleName = Constants._valueRolePASReadonlyUser;
+                                    case Constants._rolePASReadOnly:
+                                        model.RoleName = Constants._valueRolePASReadOnly;
                                         break;
                                     case Constants._roleEditor:
-                                        model.RoleName = Constants._valueRolePASReadonlyUser;
+                                        model.RoleName = Constants._valueRoleEditor;
                                         break;
                                     case Constants._roleReviewer:
                                         model.RoleName = Constants._valueRoleReviewer;
@@ -303,7 +303,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                                     bAdd = true;
                                 }
                             }
-                            else if (User.IsInRole(Constants._rolePASReadonlyUser))
+                            else if (User.IsInRole(Constants._rolePASReadOnly))
                             {
                                 if (model.RoleName != Constants._valueRolePASAdministrator &&
                                     model.RoleName != Constants._valueRoleEditor)
@@ -559,11 +559,11 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                                     case Constants._rolePASAdministrator:
                                         model.RoleName = Constants._valueRolePASAdministrator;
                                         break;
-                                    case Constants._rolePASReadonlyUser:
-                                        model.RoleName = Constants._valueRolePASReadonlyUser;
+                                    case Constants._rolePASReadOnly:
+                                        model.RoleName = Constants._valueRolePASReadOnly;
                                         break;
                                     case Constants._roleEditor:
-                                        model.RoleName = Constants._valueRolePASReadonlyUser;
+                                        model.RoleName = Constants._valueRoleEditor;
                                         break;
                                     case Constants._roleReviewer:
                                         model.RoleName = Constants._valueRoleReviewer;
@@ -600,7 +600,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                                     bAdd = true;
                                 }
                             }
-                            else if (User.IsInRole(Constants._rolePASReadonlyUser))
+                            else if (User.IsInRole(Constants._rolePASReadOnly))
                             {
                                 if (model.RoleName != Constants._valueRolePASAdministrator &&
                                     model.RoleName != Constants._valueRoleEditor)
@@ -661,11 +661,11 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                                     case Constants._rolePASAdministrator:
                                         model.RoleName = Constants._valueRolePASAdministrator;
                                         break;
-                                    case Constants._rolePASReadonlyUser:
-                                        model.RoleName = Constants._valueRolePASReadonlyUser;
+                                    case Constants._rolePASReadOnly:
+                                        model.RoleName = Constants._valueRolePASReadOnly;
                                         break;
                                     case Constants._roleEditor:
-                                        model.RoleName = Constants._valueRolePASReadonlyUser;
+                                        model.RoleName = Constants._valueRoleEditor;
                                         break;
                                     case Constants._roleReviewer:
                                         model.RoleName = Constants._valueRoleReviewer;
@@ -702,7 +702,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                                     bAdd = true;
                                 }
                             }
-                            else if (User.IsInRole(Constants._rolePASReadonlyUser))
+                            else if (User.IsInRole(Constants._rolePASReadOnly))
                             {
                                 if (model.RoleName != Constants._valueRolePASAdministrator &&
                                     model.RoleName != Constants._valueRoleEditor)
@@ -791,8 +791,8 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                 applicationUser.FirstName = model.FirstName.Trim();
                 applicationUser.MiddleName = model.MiddleName.Trim();
                 applicationUser.Title = model.Title.Trim();
+                applicationUser.ScreenName = string.Empty;
                 applicationUser.Email = model.Email.ToLower().Trim();
-                applicationUser.PhoneNumber = string.Empty;
                 applicationUser.UserName = applicationUser.Email;
                 applicationUser.IsEnabled = model.Enabled;
                 applicationUser.DateCreated = DateTime.Now;
@@ -809,8 +809,8 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                         case Constants._valueRolePASAdministrator:
                             await _userManager.AddToRoleAsync(applicationUser, Constants._rolePASAdministrator);
                             break;
-                        case Constants._valueRolePASReadonlyUser:
-                            await _userManager.AddToRoleAsync(applicationUser, Constants._rolePASReadonlyUser);
+                        case Constants._valueRolePASReadOnly:
+                            await _userManager.AddToRoleAsync(applicationUser, Constants._rolePASReadOnly);
                             break;
                         case Constants._valueRoleEditor:
                             await _userManager.AddToRoleAsync(applicationUser, Constants._roleEditor);
@@ -831,31 +831,8 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                             break;
                     }
 
-                    if (model.Enabled)
-                    {
-                        // Send reset password email to user
-                        string code = await _userManager.GeneratePasswordResetTokenAsync(applicationUser);
-
-                        var callbackUrl =
-                            Url.Action("ResetPassword", "Account", new { Id = model.Id, code = code }, protocol: Request.Scheme);
-
-                        string fullName = (model.FirstName.Trim() + " " + model.LastName.Trim()).Trim();
-
-                        if (Email.SendCredentials(
-                                model.Email.ToLower().Trim(),
-                                model.Email.ToLower().Trim(),
-                                fullName,
-                                callbackUrl) == Common.Email.Result.Error)
-                        {
-                            ViewBag.Message = Constants._valueError;
-
-                            TempData[Constants._valueMessage] = "An error occured while sending the reset password email. Please try again.";
-
-                            return View(model);
-                        }
-                    }
-
                     string message = "User with email '" + model.Email.ToString() + "' has been created.";
+                    string loggedUserId = DBUtilities.GetUserIdByUserName(User.Identity.Name);
 
                     LogDto.Create(
                         Library.Common.Definitions.LogSource.WebsiteAdministration,
@@ -863,7 +840,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                         0,
                         model.Id,
                         message,
-                        DBUtilities.GetUserIdByUserName(User.Identity.Name));
+                        loggedUserId);
 
                     return RedirectToAction("Edit", "Users", new { Id = model.Id });
                 }
@@ -882,7 +859,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
 
         public ActionResult Edit(string Id)
         {
-            if (User.IsInRole(Constants._rolePASReadonlyUser))
+            if (User.IsInRole(Constants._rolePASReadOnly))
             {
                 return RedirectToAction("Detail", "Users", new { Id = Id });
             }
@@ -913,9 +890,9 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                             {
                                 model.RoleName = Constants._valueRolePASAdministrator;
                             }
-                            else if (roleItem.Name == Constants._rolePASReadonlyUser)
+                            else if (roleItem.Name == Constants._rolePASReadOnly)
                             {
-                                model.RoleName = Constants._valueRolePASReadonlyUser;
+                                model.RoleName = Constants._valueRolePASReadOnly;
                             }
                             else if (roleItem.Name == Constants._roleEditor)
                             {
@@ -982,6 +959,8 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                     return PartialView(model);
                 }
 
+                string loggedUserId = DBUtilities.GetUserIdByUserName(User.Identity.Name);
+
                 Transaction.Begin();
                 try
                 {
@@ -1012,8 +991,8 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                                     case Constants._valueRolePASAdministrator:
                                         roleId = DBUtilities.GetRoleIdByName(Constants._rolePASAdministrator);
                                         break;
-                                    case Constants._valueRolePASReadonlyUser:
-                                        roleId = DBUtilities.GetRoleIdByName(Constants._rolePASReadonlyUser);
+                                    case Constants._valueRolePASReadOnly:
+                                        roleId = DBUtilities.GetRoleIdByName(Constants._rolePASReadOnly);
                                         break;
                                     case Constants._valueRoleEditor:
                                         roleId = DBUtilities.GetRoleIdByName(Constants._roleEditor);
@@ -1062,7 +1041,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                                         0,
                                         model.Id,
                                         message,
-                                        DBUtilities.GetUserIdByUserName(User.Identity.Name));
+                                        loggedUserId);
                                 if (createLog.Status != Library.DataAccess.Responses.StatusCodes.OK)
                                     throw (createLog.Ex);
 
@@ -1127,9 +1106,9 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                             {
                                 model.RoleName = Constants._valueRolePASAdministrator;
                             }
-                            else if (roleItem.Name == Constants._rolePASReadonlyUser)
+                            else if (roleItem.Name == Constants._rolePASReadOnly)
                             {
-                                model.RoleName = Constants._valueRolePASReadonlyUser;
+                                model.RoleName = Constants._valueRolePASReadOnly;
                             }
                             else if (roleItem.Name == Constants._roleEditor)
                             {
@@ -1173,6 +1152,8 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         [HttpPost]
         public ActionResult Purge(UserViewModel model)
         {
+            string loggedUserId = DBUtilities.GetUserIdByUserName(User.Identity.Name);
+
             Transaction.Begin();
             try
             {
@@ -1187,7 +1168,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                         0,
                         model.Id,
                         message,
-                        DBUtilities.GetUserIdByUserName(User.Identity.Name));
+                        loggedUserId);
 
                     Transaction.Commit();
 

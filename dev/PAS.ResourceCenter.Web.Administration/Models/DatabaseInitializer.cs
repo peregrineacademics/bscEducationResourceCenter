@@ -35,6 +35,7 @@ namespace PAS.ResourceCenter.Web.Administration.Models
                     LastName = "Administrator",
                     FirstName = "PAS",
                     MiddleName = "",
+                    ScreenName = "",
                     Title = "",
                     IsEnabled = true,
                     DateCreated = DateTime.Now,
