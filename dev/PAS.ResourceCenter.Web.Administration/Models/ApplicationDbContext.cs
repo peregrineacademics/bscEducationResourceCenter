@@ -32,9 +32,13 @@ namespace PAS.ResourceCenter.Web.Administration.Models
             builder.Entity<ApplicationUser>().ToTable("users").Property(p => p.UserName).HasColumnName("userName");
             builder.Entity<ApplicationUser>().ToTable("users").Property(p => p.LastName).HasColumnName("lastName").IsRequired();
             builder.Entity<ApplicationUser>().ToTable("users").Property(p => p.FirstName).HasColumnName("firstName").IsRequired();
-            builder.Entity<ApplicationUser>().ToTable("users").Property(p => p.MiddleName).HasColumnName("middleName").IsRequired();
-            builder.Entity<ApplicationUser>().ToTable("users").Property(p => p.ScreenName).HasColumnName("screenName").IsRequired();
+            builder.Entity<ApplicationUser>().ToTable("users").Property(p => p.MiddleName).HasColumnName("middleName").IsRequired();            
             builder.Entity<ApplicationUser>().ToTable("users").Property(p => p.Title).HasColumnName("title").IsRequired();
+            builder.Entity<ApplicationUser>().ToTable("users").Property(p => p.ScreenName).HasColumnName("screenName").IsRequired();
+            builder.Entity<ApplicationUser>().ToTable("users").Property(p => p.Degree).HasColumnName("degree").IsRequired();
+            builder.Entity<ApplicationUser>().ToTable("users").Property(p => p.Biography).HasColumnName("biography").IsRequired();
+            builder.Entity<ApplicationUser>().ToTable("users").Property(p => p.HideFromReviewerList).HasColumnName("hideFromReviewerList").IsRequired();
+            builder.Entity<ApplicationUser>().ToTable("users").Property(p => p.IsActiveReviewer).HasColumnName("isActiveReviewer").IsRequired();
             builder.Entity<ApplicationUser>().ToTable("users").Property(p => p.IsEnabled).HasColumnName("isEnabled").IsRequired();
             builder.Entity<ApplicationUser>().ToTable("users").Property(p => p.DateCreated).HasColumnName("dateCreated").IsRequired();
             builder.Entity<ApplicationUser>().ToTable("users").Property(p => p.LastUpdated).HasColumnName("lastUpdated").IsRequired();

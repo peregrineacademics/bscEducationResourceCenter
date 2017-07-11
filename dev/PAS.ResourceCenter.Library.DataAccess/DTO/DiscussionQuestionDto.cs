@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using PAS.ResourceCenter.Library.DataAccess.Interfaces;
 using PAS.ResourceCenter.Library.DataAccess.Models;
 using PAS.ResourceCenter.Library.DataAccess.Responses;
-using System.Collections.Generic;
+/* Insert Collections */
 
 // This file is generated. DO NOT MODIFY
 namespace PAS.ResourceCenter.Library.DataAccess.DTO
@@ -29,8 +29,6 @@ namespace PAS.ResourceCenter.Library.DataAccess.DTO
 		public Int64 Ordinal{ get; set; }
 		public String Question{ get; set; }
 		public Int64 ReviewId{ get; set; }
-
-		public Models.Review Review { get; set; }
 
 
         internal void Assign(IDiscussionQuestion item, bool includeNavigation = false)

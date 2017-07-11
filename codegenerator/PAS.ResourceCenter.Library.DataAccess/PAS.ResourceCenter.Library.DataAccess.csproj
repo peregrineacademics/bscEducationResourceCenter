@@ -126,8 +126,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Competency.cs" />
-    <Compile Include="Models\Discipline.cs" />
+    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\DiscussionQuestion.cs" />
     <Compile Include="Models\EdgeGuide.cs" />
     <Compile Include="Models\ercContext.cs" />
@@ -139,24 +138,15 @@
     <Compile Include="Models\QuestionType.cs" />
     <Compile Include="Models\QuizAnswer.cs" />
     <Compile Include="Models\QuizQuestion.cs" />
-    <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\ReviewActivity.cs" />
-    <Compile Include="Models\ReviewCompetency.cs" />
-    <Compile Include="Models\ReviewDiscipline.cs" />
+    <Compile Include="Models\ReviewCategory.cs" />
     <Compile Include="Models\ReviewEdgeGuide.cs" />
-    <Compile Include="Models\Reviewer.cs" />
-    <Compile Include="Models\ReviewRegion.cs" />
-    <Compile Include="Models\ReviewSector.cs" />
+    <Compile Include="Models\ReviewerCategory.cs" />
     <Compile Include="Models\ReviewStatus.cs" />
-    <Compile Include="Models\ReviewSubRegion.cs" />
-    <Compile Include="Models\ReviewSubTopic.cs" />
     <Compile Include="Models\RoleClaims.cs" />
     <Compile Include="Models\Roles.cs" />
-    <Compile Include="Models\Sector.cs" />
     <Compile Include="Models\SiteSetting.cs" />
-    <Compile Include="Models\SubRegion.cs" />
-    <Compile Include="Models\SubTopic.cs" />
     <Compile Include="Models\UserClaims.cs" />
     <Compile Include="Models\UserLogins.cs" />
     <Compile Include="Models\UserRoles.cs" />
@@ -166,5 +156,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

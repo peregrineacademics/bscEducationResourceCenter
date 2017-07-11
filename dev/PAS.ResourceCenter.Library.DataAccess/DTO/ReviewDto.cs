@@ -20,7 +20,7 @@ namespace PAS.ResourceCenter.Library.DataAccess.DTO
 			IssueId = 0;
 			KeyWords = "";
 			LastUpdated = DateTime.Now;
-			ReviewerId = 0;
+			ReviewerId = "";
 			ReviewStatusId = 0;
 			Summary = "";
 			Title = "";
@@ -43,7 +43,8 @@ namespace PAS.ResourceCenter.Library.DataAccess.DTO
 		public Int64 IssueId{ get; set; }
 		public String KeyWords{ get; set; }
 		public DateTime LastUpdated{ get; set; }
-		public Int64 ReviewerId{ get; set; }
+		public Boolean Migrated{ get; set; }
+		public String ReviewerId{ get; set; }
 		public Int64 ReviewStatusId{ get; set; }
 		public String Summary{ get; set; }
 		public String Title{ get; set; }
@@ -51,20 +52,11 @@ namespace PAS.ResourceCenter.Library.DataAccess.DTO
 		public String Url{ get; set; }
 
 		public Models.Users CreatedByUser { get; set; }
-		public ICollection<DiscussionQuestion> DiscussionQuestion { get; set; }
 		public Models.GuideType GuideType { get; set; }
 		public Models.Issue Issue { get; set; }
-		public ICollection<QuizQuestion> QuizQuestion { get; set; }
-		public ICollection<ReviewActivity> ReviewActivity { get; set; }
-		public ICollection<ReviewCompetency> ReviewCompetency { get; set; }
-		public ICollection<ReviewDiscipline> ReviewDiscipline { get; set; }
-		public ICollection<ReviewEdgeGuide> ReviewEdgeGuide { get; set; }
-		public Models.Reviewer Reviewer { get; set; }
-		public ICollection<ReviewRegion> ReviewRegion { get; set; }
-		public ICollection<ReviewSector> ReviewSector { get; set; }
+		public ICollection<ReviewCategory> ReviewCategory { get; set; }
+		public Models.Users Reviewer { get; set; }
 		public Models.ReviewStatus ReviewStatus { get; set; }
-		public ICollection<ReviewSubRegion> ReviewSubRegion { get; set; }
-		public ICollection<ReviewSubTopic> ReviewSubTopic { get; set; }
 		public Models.Users UpdatedByUser { get; set; }
 
 

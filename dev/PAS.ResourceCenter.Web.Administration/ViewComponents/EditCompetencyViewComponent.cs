@@ -10,7 +10,7 @@ namespace PAS.ResourceCenter.Web.Administration.ViewComponents
         {
             if (Id.HasValue)
             {
-                var result = CompetencyDto.Get(Id.Value);
+                var result = CategoryDto.Get(Id.Value);
                 if (result.Status == Library.DataAccess.Responses.StatusCodes.OK)
                 {
                     if (result.Items.Count > 0)
@@ -19,7 +19,7 @@ namespace PAS.ResourceCenter.Web.Administration.ViewComponents
 
                         CompetencyViewModel model = new CompetencyViewModel();
                         model.Id = item.Id;
-                        model.Name = item.Name;
+                        model.Name = item.Name.Trim();
                         model.Enabled = item.IsEnabled;
                         model.DivEditId = "divmodaleditcompetency" + item.Id.ToString();
                         model.DivPurgeId = "divmodalpurgecompetency" + item.Id.ToString();

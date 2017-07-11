@@ -6,8 +6,7 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
 {
     public partial class ercContext : DbContext
     {
-        public virtual DbSet<Competency> Competency { get; set; }
-        public virtual DbSet<Discipline> Discipline { get; set; }
+        public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<DiscussionQuestion> DiscussionQuestion { get; set; }
         public virtual DbSet<EdgeGuide> EdgeGuide { get; set; }
         public virtual DbSet<GuideType> GuideType { get; set; }
@@ -18,24 +17,15 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
         public virtual DbSet<QuestionType> QuestionType { get; set; }
         public virtual DbSet<QuizAnswer> QuizAnswer { get; set; }
         public virtual DbSet<QuizQuestion> QuizQuestion { get; set; }
-        public virtual DbSet<Region> Region { get; set; }
         public virtual DbSet<Review> Review { get; set; }
         public virtual DbSet<ReviewActivity> ReviewActivity { get; set; }
-        public virtual DbSet<ReviewCompetency> ReviewCompetency { get; set; }
-        public virtual DbSet<ReviewDiscipline> ReviewDiscipline { get; set; }
+        public virtual DbSet<ReviewCategory> ReviewCategory { get; set; }
         public virtual DbSet<ReviewEdgeGuide> ReviewEdgeGuide { get; set; }
-        public virtual DbSet<ReviewRegion> ReviewRegion { get; set; }
-        public virtual DbSet<ReviewSector> ReviewSector { get; set; }
         public virtual DbSet<ReviewStatus> ReviewStatus { get; set; }
-        public virtual DbSet<ReviewSubRegion> ReviewSubRegion { get; set; }
-        public virtual DbSet<ReviewSubTopic> ReviewSubTopic { get; set; }
-        public virtual DbSet<Reviewer> Reviewer { get; set; }
+        public virtual DbSet<ReviewerCategory> ReviewerCategory { get; set; }
         public virtual DbSet<RoleClaims> RoleClaims { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
-        public virtual DbSet<Sector> Sector { get; set; }
         public virtual DbSet<SiteSetting> SiteSetting { get; set; }
-        public virtual DbSet<SubRegion> SubRegion { get; set; }
-        public virtual DbSet<SubTopic> SubTopic { get; set; }
         public virtual DbSet<UserClaims> UserClaims { get; set; }
         public virtual DbSet<UserLogins> UserLogins { get; set; }
         public virtual DbSet<UserRoles> UserRoles { get; set; }
@@ -49,36 +39,20 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Competency>(entity =>
+            modelBuilder.Entity<Category>(entity =>
             {
-                entity.ToTable("competency");
+                entity.ToTable("category");
 
-                entity.HasIndex(e => e.Name)
-                    .HasName("IX_name")
-                    .IsUnique();
+                entity.Property(e => e.GroupId).HasColumnName("groupId");
 
                 entity.Property(e => e.IsEnabled).HasColumnName("isEnabled");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasColumnName("name")
-                    .HasMaxLength(64);
-            });
+                    .HasColumnType("nchar(128)");
 
-            modelBuilder.Entity<Discipline>(entity =>
-            {
-                entity.ToTable("discipline");
-
-                entity.HasIndex(e => e.Name)
-                    .HasName("IX_name")
-                    .IsUnique();
-
-                entity.Property(e => e.IsEnabled).HasColumnName("isEnabled");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasColumnName("name")
-                    .HasMaxLength(64);
+                entity.Property(e => e.ParentId).HasColumnName("parentId");
             });
 
             modelBuilder.Entity<DiscussionQuestion>(entity =>
@@ -92,12 +66,6 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                     .HasColumnName("question");
 
                 entity.Property(e => e.ReviewId).HasColumnName("reviewId");
-
-                entity.HasOne(d => d.Review)
-                    .WithMany(p => p.DiscussionQuestion)
-                    .HasForeignKey(d => d.ReviewId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_discussionQuestion_review");
             });
 
             modelBuilder.Entity<EdgeGuide>(entity =>
@@ -320,28 +288,6 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                     .HasForeignKey(d => d.QuestionTypeId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_quizQuestion_questionType");
-
-                entity.HasOne(d => d.Review)
-                    .WithMany(p => p.QuizQuestion)
-                    .HasForeignKey(d => d.ReviewId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_quizQuestion_review");
-            });
-
-            modelBuilder.Entity<Region>(entity =>
-            {
-                entity.ToTable("region");
-
-                entity.HasIndex(e => e.Name)
-                    .HasName("IX_name")
-                    .IsUnique();
-
-                entity.Property(e => e.IsEnabled).HasColumnName("isEnabled");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasColumnName("name")
-                    .HasMaxLength(64);
             });
 
             modelBuilder.Entity<Review>(entity =>
@@ -373,9 +319,14 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                     .HasColumnName("lastUpdated")
                     .HasColumnType("datetime");
 
+                entity.Property(e => e.Migrated).HasColumnName("migrated");
+
                 entity.Property(e => e.ReviewStatusId).HasColumnName("reviewStatusId");
 
-                entity.Property(e => e.ReviewerId).HasColumnName("reviewerId");
+                entity.Property(e => e.ReviewerId)
+                    .IsRequired()
+                    .HasColumnName("reviewerId")
+                    .HasMaxLength(450);
 
                 entity.Property(e => e.Summary)
                     .IsRequired()
@@ -420,10 +371,10 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                     .HasConstraintName("FK_review_reviewStatus");
 
                 entity.HasOne(d => d.Reviewer)
-                    .WithMany(p => p.Review)
+                    .WithMany(p => p.ReviewReviewer)
                     .HasForeignKey(d => d.ReviewerId)
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_review_reviewer");
+                    .HasConstraintName("FK_review_users");
 
                 entity.HasOne(d => d.UpdatedByUser)
                     .WithMany(p => p.ReviewUpdatedByUser)
@@ -443,62 +394,31 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                 entity.Property(e => e.Ordinal).HasColumnName("ordinal");
 
                 entity.Property(e => e.ReviewId).HasColumnName("reviewId");
-
-                entity.HasOne(d => d.Review)
-                    .WithMany(p => p.ReviewActivity)
-                    .HasForeignKey(d => d.ReviewId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_reviewActivity_review");
             });
 
-            modelBuilder.Entity<ReviewCompetency>(entity =>
+            modelBuilder.Entity<ReviewCategory>(entity =>
             {
-                entity.ToTable("reviewCompetency");
+                entity.ToTable("reviewCategory");
 
-                entity.HasIndex(e => new { e.ReviewId, e.CompetencyId })
-                    .HasName("IX_reviewId_competencyId")
+                entity.HasIndex(e => new { e.ReviewId, e.Categoryid })
+                    .HasName("IX_reviewId_categoryId")
                     .IsUnique();
 
-                entity.Property(e => e.CompetencyId).HasColumnName("competencyId");
+                entity.Property(e => e.Categoryid).HasColumnName("categoryid");
 
                 entity.Property(e => e.ReviewId).HasColumnName("reviewId");
 
-                entity.HasOne(d => d.Competency)
-                    .WithMany(p => p.ReviewCompetency)
-                    .HasForeignKey(d => d.CompetencyId)
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.ReviewCategory)
+                    .HasForeignKey(d => d.Categoryid)
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_reviewCompetency_competency");
+                    .HasConstraintName("FK_reviewCategory_reviewCategory");
 
                 entity.HasOne(d => d.Review)
-                    .WithMany(p => p.ReviewCompetency)
+                    .WithMany(p => p.ReviewCategory)
                     .HasForeignKey(d => d.ReviewId)
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_reviewCompetency_review");
-            });
-
-            modelBuilder.Entity<ReviewDiscipline>(entity =>
-            {
-                entity.ToTable("reviewDiscipline");
-
-                entity.HasIndex(e => new { e.ReviewId, e.DisciplineId })
-                    .HasName("IX_reviewId_disciplineId")
-                    .IsUnique();
-
-                entity.Property(e => e.DisciplineId).HasColumnName("disciplineId");
-
-                entity.Property(e => e.ReviewId).HasColumnName("reviewId");
-
-                entity.HasOne(d => d.Discipline)
-                    .WithMany(p => p.ReviewDiscipline)
-                    .HasForeignKey(d => d.DisciplineId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_reviewDiscipline_discipline");
-
-                entity.HasOne(d => d.Review)
-                    .WithMany(p => p.ReviewDiscipline)
-                    .HasForeignKey(d => d.ReviewId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_reviewDiscipline_review");
+                    .HasConstraintName("FK_reviewCategory_review");
             });
 
             modelBuilder.Entity<ReviewEdgeGuide>(entity =>
@@ -518,62 +438,6 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                     .HasForeignKey(d => d.EdgeGuideId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_reviewEdgeGuide_edgeGuide");
-
-                entity.HasOne(d => d.Review)
-                    .WithMany(p => p.ReviewEdgeGuide)
-                    .HasForeignKey(d => d.ReviewId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_reviewEdgeGuide_review");
-            });
-
-            modelBuilder.Entity<ReviewRegion>(entity =>
-            {
-                entity.ToTable("reviewRegion");
-
-                entity.HasIndex(e => new { e.ReviewId, e.RegionId })
-                    .HasName("IX_reviewId_regionId")
-                    .IsUnique();
-
-                entity.Property(e => e.RegionId).HasColumnName("regionId");
-
-                entity.Property(e => e.ReviewId).HasColumnName("reviewId");
-
-                entity.HasOne(d => d.Region)
-                    .WithMany(p => p.ReviewRegion)
-                    .HasForeignKey(d => d.RegionId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_reviewRegion_region");
-
-                entity.HasOne(d => d.Review)
-                    .WithMany(p => p.ReviewRegion)
-                    .HasForeignKey(d => d.ReviewId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_reviewRegion_review1");
-            });
-
-            modelBuilder.Entity<ReviewSector>(entity =>
-            {
-                entity.ToTable("reviewSector");
-
-                entity.HasIndex(e => new { e.ReviewId, e.SectorId })
-                    .HasName("IX_reviewId_sectorId")
-                    .IsUnique();
-
-                entity.Property(e => e.ReviewId).HasColumnName("reviewId");
-
-                entity.Property(e => e.SectorId).HasColumnName("sectorId");
-
-                entity.HasOne(d => d.Review)
-                    .WithMany(p => p.ReviewSector)
-                    .HasForeignKey(d => d.ReviewId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_reviewSector_review");
-
-                entity.HasOne(d => d.Sector)
-                    .WithMany(p => p.ReviewSector)
-                    .HasForeignKey(d => d.SectorId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_reviewSector_sector");
             });
 
             modelBuilder.Entity<ReviewStatus>(entity =>
@@ -590,111 +454,28 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                     .HasMaxLength(25);
             });
 
-            modelBuilder.Entity<ReviewSubRegion>(entity =>
+            modelBuilder.Entity<ReviewerCategory>(entity =>
             {
-                entity.ToTable("reviewSubRegion");
+                entity.ToTable("reviewerCategory");
 
-                entity.HasIndex(e => new { e.ReviewId, e.SubRegionId })
-                    .HasName("IX_reviewId_subRegionId")
-                    .IsUnique();
-
-                entity.Property(e => e.ReviewId).HasColumnName("reviewId");
-
-                entity.Property(e => e.SubRegionId).HasColumnName("subRegionId");
-
-                entity.HasOne(d => d.Review)
-                    .WithMany(p => p.ReviewSubRegion)
-                    .HasForeignKey(d => d.ReviewId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_reviewRegion_review");
-
-                entity.HasOne(d => d.SubRegion)
-                    .WithMany(p => p.ReviewSubRegion)
-                    .HasForeignKey(d => d.SubRegionId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_reviewSubRegion_subRegion");
-            });
-
-            modelBuilder.Entity<ReviewSubTopic>(entity =>
-            {
-                entity.ToTable("reviewSubTopic");
-
-                entity.HasIndex(e => new { e.ReviewId, e.SubTopicId })
-                    .HasName("IX_reviewId_subTopicId")
-                    .IsUnique();
-
-                entity.Property(e => e.ReviewId).HasColumnName("reviewId");
-
-                entity.Property(e => e.SubTopicId).HasColumnName("subTopicId");
-
-                entity.HasOne(d => d.Review)
-                    .WithMany(p => p.ReviewSubTopic)
-                    .HasForeignKey(d => d.ReviewId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_reviewSubTopic_review");
-
-                entity.HasOne(d => d.SubTopic)
-                    .WithMany(p => p.ReviewSubTopic)
-                    .HasForeignKey(d => d.SubTopicId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_reviewSubTopic_subTopic");
-            });
-
-            modelBuilder.Entity<Reviewer>(entity =>
-            {
-                entity.ToTable("reviewer");
-
-                entity.HasIndex(e => e.UserId)
-                    .HasName("IX_userId")
-                    .IsUnique();
-
-                entity.Property(e => e.Biography)
-                    .IsRequired()
-                    .HasColumnName("biography");
-
-                entity.Property(e => e.CreatedByUserId)
-                    .IsRequired()
-                    .HasColumnName("createdByUserId")
-                    .HasMaxLength(450);
-
-                entity.Property(e => e.DateCreated)
-                    .HasColumnName("dateCreated")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.Degree)
-                    .IsRequired()
-                    .HasColumnName("degree")
-                    .HasMaxLength(64);
-
-                entity.Property(e => e.HideFromReviewerList).HasColumnName("hideFromReviewerList");
-
-                entity.Property(e => e.IsActive).HasColumnName("isActive");
-
-                entity.Property(e => e.LastUpdated)
-                    .HasColumnName("lastUpdated")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.UpdatedByUserId)
-                    .IsRequired()
-                    .HasColumnName("updatedByUserId")
-                    .HasMaxLength(450);
+                entity.Property(e => e.Categoryid).HasColumnName("categoryid");
 
                 entity.Property(e => e.UserId)
                     .IsRequired()
                     .HasColumnName("userId")
                     .HasMaxLength(450);
 
-                entity.HasOne(d => d.UpdatedByUser)
-                    .WithMany(p => p.ReviewerUpdatedByUser)
-                    .HasForeignKey(d => d.UpdatedByUserId)
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.ReviewerCategory)
+                    .HasForeignKey(d => d.Categoryid)
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_reviewer_updatedByUser");
+                    .HasConstraintName("FK_reviewerCategory_category");
 
                 entity.HasOne(d => d.User)
-                    .WithOne(p => p.ReviewerUser)
-                    .HasForeignKey<Reviewer>(d => d.UserId)
+                    .WithMany(p => p.ReviewerCategory)
+                    .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_reviewer_users");
+                    .HasConstraintName("FK_reviewerCategory_users");
             });
 
             modelBuilder.Entity<RoleClaims>(entity =>
@@ -734,22 +515,6 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                     .HasMaxLength(256);
             });
 
-            modelBuilder.Entity<Sector>(entity =>
-            {
-                entity.ToTable("sector");
-
-                entity.HasIndex(e => e.Name)
-                    .HasName("IX_name")
-                    .IsUnique();
-
-                entity.Property(e => e.IsEnabled).HasColumnName("isEnabled");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasColumnName("name")
-                    .HasMaxLength(64);
-            });
-
             modelBuilder.Entity<SiteSetting>(entity =>
             {
                 entity.ToTable("siteSetting");
@@ -781,54 +546,6 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                 entity.Property(e => e.Value)
                     .IsRequired()
                     .HasColumnName("value");
-            });
-
-            modelBuilder.Entity<SubRegion>(entity =>
-            {
-                entity.ToTable("subRegion");
-
-                entity.HasIndex(e => new { e.RegionId, e.Name })
-                    .HasName("IX_regionId_name")
-                    .IsUnique();
-
-                entity.Property(e => e.IsEnabled).HasColumnName("isEnabled");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasColumnName("name")
-                    .HasColumnType("nchar(64)");
-
-                entity.Property(e => e.RegionId).HasColumnName("regionId");
-
-                entity.HasOne(d => d.Region)
-                    .WithMany(p => p.SubRegion)
-                    .HasForeignKey(d => d.RegionId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_subRegion_region");
-            });
-
-            modelBuilder.Entity<SubTopic>(entity =>
-            {
-                entity.ToTable("subTopic");
-
-                entity.HasIndex(e => new { e.DisciplineId, e.Name })
-                    .HasName("IX_disciplineId_name")
-                    .IsUnique();
-
-                entity.Property(e => e.DisciplineId).HasColumnName("disciplineId");
-
-                entity.Property(e => e.IsEnabled).HasColumnName("isEnabled");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasColumnName("name")
-                    .HasMaxLength(64);
-
-                entity.HasOne(d => d.Discipline)
-                    .WithMany(p => p.SubTopic)
-                    .HasForeignKey(d => d.DisciplineId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_subTopic_discipline");
             });
 
             modelBuilder.Entity<UserClaims>(entity =>
@@ -921,9 +638,20 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
 
                 entity.Property(e => e.AccessFailedCount).HasColumnName("accessFailedCount");
 
+                entity.Property(e => e.Biography)
+                    .IsRequired()
+                    .HasColumnName("biography");
+
                 entity.Property(e => e.ConcurrencyStamp).HasColumnName("concurrencyStamp");
 
-                entity.Property(e => e.DateCreated).HasColumnName("dateCreated");
+                entity.Property(e => e.DateCreated)
+                    .HasColumnName("dateCreated")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.Degree)
+                    .IsRequired()
+                    .HasColumnName("degree")
+                    .HasMaxLength(64);
 
                 entity.Property(e => e.Email).HasColumnName("email");
 
@@ -934,6 +662,10 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                     .HasColumnName("firstName")
                     .HasMaxLength(256);
 
+                entity.Property(e => e.HideFromReviewerList).HasColumnName("hideFromReviewerList");
+
+                entity.Property(e => e.IsActiveReviewer).HasColumnName("isActiveReviewer");
+
                 entity.Property(e => e.IsEnabled).HasColumnName("isEnabled");
 
                 entity.Property(e => e.LastName)
@@ -941,7 +673,9 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                     .HasColumnName("lastName")
                     .HasMaxLength(256);
 
-                entity.Property(e => e.LastUpdated).HasColumnName("lastUpdated");
+                entity.Property(e => e.LastUpdated)
+                    .HasColumnName("lastUpdated")
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.LockoutEnabled).HasColumnName("lockoutEnabled");
 

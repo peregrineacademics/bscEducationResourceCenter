@@ -161,28 +161,6 @@ namespace PAS.ResourceCenter.Web.Administration.Common
             return ret;
         }
 
-        public static string GetReviewerById(long reviewerId)
-        {
-            string ret = string.Empty;
-
-            var result = ReviewerDto.Get(reviewerId, true);
-            if (result.Status == StatusCodes.OK)
-            {
-                if (result.Items.Count > 0)
-                {
-                    var review = result.First();
-
-                    ret = review.User.LastName.Trim() + ", " + review.User.FirstName.Trim();
-                }
-            }
-            else
-            {
-                throw (result.Ex);
-            }
-
-            return ret;
-        }
-
         public static List<LogViewModel> GetLogsPerUser(string userId)
         {
             List<LogViewModel> ret = new List<LogViewModel>();

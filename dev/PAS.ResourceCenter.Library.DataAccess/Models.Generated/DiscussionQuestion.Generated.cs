@@ -23,10 +23,6 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
 			destination.Question = source.Question;
 			destination.ReviewId = source.ReviewId;
 
-			if (includeNavigation)
-			{
-				destination.Review = source.Review;
-			}
         }
 
         internal static DiscussionQuestionDto Create(DiscussionQuestionDto itemDto)
@@ -51,8 +47,7 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
             {
                 IDiscussionQuestion dbItem;
                 if (includeNavigation)
-                    dbItem = context.DiscussionQuestion
-								.Include(n=>n.Review).FirstOrDefault(p => p.Id == id);                
+                    dbItem = context.DiscussionQuestion.FirstOrDefault(p => p.Id == id);                
                 else
                     dbItem = context.DiscussionQuestion.FirstOrDefault(p => p.Id == id);
 
@@ -72,8 +67,7 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                     return Select(includeNavigation);
 
                 if (includeNavigation)
-                    dbItems = context.DiscussionQuestion.Where(whereClause)
-								.Include(n=>n.Review);
+                    dbItems = context.DiscussionQuestion.Where(whereClause);
                 else
                     dbItems = context.DiscussionQuestion.Where(whereClause);
 
@@ -99,8 +93,7 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                 var results = new List<DiscussionQuestionDto>();
 
                 if (includeNavigation)
-                    dbItems = context.DiscussionQuestion
-								.Include(n=>n.Review);
+                    dbItems = context.DiscussionQuestion;
                 else
                     dbItems = context.DiscussionQuestion;
 

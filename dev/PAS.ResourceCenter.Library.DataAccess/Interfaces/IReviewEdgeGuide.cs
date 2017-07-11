@@ -12,7 +12,6 @@ namespace PAS.ResourceCenter.Library.DataAccess.Interfaces
 		Int64 ReviewId{ get; set; }
 
 		Models.EdgeGuide EdgeGuide { get; set; }
-		Models.Review Review { get; set; }
 
     }
 }

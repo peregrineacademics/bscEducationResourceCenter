@@ -18,6 +18,5 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
 
         public virtual ICollection<QuizAnswer> QuizAnswer { get; set; }
         public virtual QuestionType QuestionType { get; set; }
-        public virtual Review Review { get; set; }
     }
 }

@@ -21,8 +21,10 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
     <Content Include="wwwroot\jsx\linkfullname.jsx" />
-    <Content Include="wwwroot\jsx\logsearch - Copy.jsx" />
     <Content Include="wwwroot\jsx\logsearch.jsx" />
+    <Content Include="wwwroot\jsx\reviewersearch.jsx">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="wwwroot\jsx\usersearch.jsx" />
   </ItemGroup>
 

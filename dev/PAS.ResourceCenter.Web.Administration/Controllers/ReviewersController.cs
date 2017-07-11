@@ -21,7 +21,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
 
         public ActionResult Index()
         {
-            return RedirectToAction("Reviewers", "Reviewers");
+            return View();
         }
 
         public ActionResult Reviewers()

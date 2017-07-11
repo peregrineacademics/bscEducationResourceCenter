@@ -787,13 +787,17 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
 
                 ApplicationUser applicationUser = new ApplicationUser();
                 applicationUser.Id = model.Id;
+                applicationUser.Email = model.Email.ToLower().Trim();
+                applicationUser.UserName = applicationUser.Email;
                 applicationUser.LastName = model.LastName.Trim();
                 applicationUser.FirstName = model.FirstName.Trim();
                 applicationUser.MiddleName = model.MiddleName.Trim();
                 applicationUser.Title = model.Title.Trim();
                 applicationUser.ScreenName = string.Empty;
-                applicationUser.Email = model.Email.ToLower().Trim();
-                applicationUser.UserName = applicationUser.Email;
+                applicationUser.Degree = string.Empty;
+                applicationUser.Biography = string.Empty;
+                applicationUser.HideFromReviewerList = false;
+                applicationUser.IsActiveReviewer = true;
                 applicationUser.IsEnabled = model.Enabled;
                 applicationUser.DateCreated = DateTime.Now;
                 applicationUser.LastUpdated = applicationUser.DateCreated;

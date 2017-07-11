@@ -29,7 +29,6 @@ namespace PAS.ResourceCenter.Library.DataAccess.DTO
 		public Int64 ReviewId{ get; set; }
 
 		public Models.EdgeGuide EdgeGuide { get; set; }
-		public Models.Review Review { get; set; }
 
 
         internal void Assign(IReviewEdgeGuide item, bool includeNavigation = false)

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PAS.ResourceCenter.Library.Common.Definitions
+﻿namespace PAS.ResourceCenter.Library.Common.Definitions
 {
     public class LogSource
     {

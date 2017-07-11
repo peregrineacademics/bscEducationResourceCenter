@@ -13,8 +13,10 @@ namespace PAS.ResourceCenter.Library.DataAccess.DTO
         public UsersDto(string byUserId = "")
         {
 			AccessFailedCount = 0;
+			Biography = "";
 			ConcurrencyStamp = "";
 			DateCreated = DateTime.Now;
+			Degree = "";
 			Email = "";
 			FirstName = "";
 			Id = "";
@@ -40,12 +42,16 @@ namespace PAS.ResourceCenter.Library.DataAccess.DTO
         }
 
 		public Int32 AccessFailedCount{ get; set; }
+		public String Biography{ get; set; }
 		public String ConcurrencyStamp{ get; set; }
 		public DateTime DateCreated{ get; set; }
+		public String Degree{ get; set; }
 		public String Email{ get; set; }
 		public Boolean EmailConfirmed{ get; set; }
 		public String FirstName{ get; set; }
+		public Boolean HideFromReviewerList{ get; set; }
 		public String Id{ get; set; }
+		public Boolean IsActiveReviewer{ get; set; }
 		public Boolean IsEnabled{ get; set; }
 		public String LastName{ get; set; }
 		public DateTime LastUpdated{ get; set; }
@@ -67,8 +73,8 @@ namespace PAS.ResourceCenter.Library.DataAccess.DTO
 		public ICollection<Issue> IssueUpdatedByUser { get; set; }
 		public ICollection<Log> Log { get; set; }
 		public ICollection<Review> ReviewCreatedByUser { get; set; }
-		public ICollection<Reviewer> ReviewerUpdatedByUser { get; set; }
-		public Models.Reviewer ReviewerUser { get; set; }
+		public ICollection<ReviewerCategory> ReviewerCategory { get; set; }
+		public ICollection<Review> ReviewReviewer { get; set; }
 		public ICollection<Review> ReviewUpdatedByUser { get; set; }
 		public ICollection<UserClaims> UserClaims { get; set; }
 		public ICollection<UserLogins> UserLogins { get; set; }

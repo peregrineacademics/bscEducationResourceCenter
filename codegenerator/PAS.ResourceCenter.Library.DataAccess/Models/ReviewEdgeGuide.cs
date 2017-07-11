@@ -10,6 +10,5 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
         public long EdgeGuideId { get; set; }
 
         public virtual EdgeGuide EdgeGuide { get; set; }
-        public virtual Review Review { get; set; }
     }
 }

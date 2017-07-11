@@ -26,6 +26,7 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
 			destination.IssueId = source.IssueId;
 			destination.KeyWords = source.KeyWords;
 			destination.LastUpdated = source.LastUpdated;
+			destination.Migrated = source.Migrated;
 			destination.ReviewerId = source.ReviewerId;
 			destination.ReviewStatusId = source.ReviewStatusId;
 			destination.Summary = source.Summary;
@@ -36,20 +37,11 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
 			if (includeNavigation)
 			{
 				destination.CreatedByUser = source.CreatedByUser;
-				destination.DiscussionQuestion = source.DiscussionQuestion;
 				destination.GuideType = source.GuideType;
 				destination.Issue = source.Issue;
-				destination.QuizQuestion = source.QuizQuestion;
-				destination.ReviewActivity = source.ReviewActivity;
-				destination.ReviewCompetency = source.ReviewCompetency;
-				destination.ReviewDiscipline = source.ReviewDiscipline;
-				destination.ReviewEdgeGuide = source.ReviewEdgeGuide;
+				destination.ReviewCategory = source.ReviewCategory;
 				destination.Reviewer = source.Reviewer;
-				destination.ReviewRegion = source.ReviewRegion;
-				destination.ReviewSector = source.ReviewSector;
 				destination.ReviewStatus = source.ReviewStatus;
-				destination.ReviewSubRegion = source.ReviewSubRegion;
-				destination.ReviewSubTopic = source.ReviewSubTopic;
 				destination.UpdatedByUser = source.UpdatedByUser;
 			}
         }
@@ -78,20 +70,11 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                 if (includeNavigation)
                     dbItem = context.Review
 								.Include(n=>n.CreatedByUser)
-								.Include(n=>n.DiscussionQuestion)
 								.Include(n=>n.GuideType)
 								.Include(n=>n.Issue)
-								.Include(n=>n.QuizQuestion)
-								.Include(n=>n.ReviewActivity)
-								.Include(n=>n.ReviewCompetency)
-								.Include(n=>n.ReviewDiscipline)
-								.Include(n=>n.ReviewEdgeGuide)
+								.Include(n=>n.ReviewCategory)
 								.Include(n=>n.Reviewer)
-								.Include(n=>n.ReviewRegion)
-								.Include(n=>n.ReviewSector)
 								.Include(n=>n.ReviewStatus)
-								.Include(n=>n.ReviewSubRegion)
-								.Include(n=>n.ReviewSubTopic)
 								.Include(n=>n.UpdatedByUser).FirstOrDefault(p => p.Id == id);                
                 else
                     dbItem = context.Review.FirstOrDefault(p => p.Id == id);
@@ -114,20 +97,11 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                 if (includeNavigation)
                     dbItems = context.Review.Where(whereClause)
 								.Include(n=>n.CreatedByUser)
-								.Include(n=>n.DiscussionQuestion)
 								.Include(n=>n.GuideType)
 								.Include(n=>n.Issue)
-								.Include(n=>n.QuizQuestion)
-								.Include(n=>n.ReviewActivity)
-								.Include(n=>n.ReviewCompetency)
-								.Include(n=>n.ReviewDiscipline)
-								.Include(n=>n.ReviewEdgeGuide)
+								.Include(n=>n.ReviewCategory)
 								.Include(n=>n.Reviewer)
-								.Include(n=>n.ReviewRegion)
-								.Include(n=>n.ReviewSector)
 								.Include(n=>n.ReviewStatus)
-								.Include(n=>n.ReviewSubRegion)
-								.Include(n=>n.ReviewSubTopic)
 								.Include(n=>n.UpdatedByUser);
                 else
                     dbItems = context.Review.Where(whereClause);
@@ -156,20 +130,11 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                 if (includeNavigation)
                     dbItems = context.Review
 								.Include(n=>n.CreatedByUser)
-								.Include(n=>n.DiscussionQuestion)
 								.Include(n=>n.GuideType)
 								.Include(n=>n.Issue)
-								.Include(n=>n.QuizQuestion)
-								.Include(n=>n.ReviewActivity)
-								.Include(n=>n.ReviewCompetency)
-								.Include(n=>n.ReviewDiscipline)
-								.Include(n=>n.ReviewEdgeGuide)
+								.Include(n=>n.ReviewCategory)
 								.Include(n=>n.Reviewer)
-								.Include(n=>n.ReviewRegion)
-								.Include(n=>n.ReviewSector)
 								.Include(n=>n.ReviewStatus)
-								.Include(n=>n.ReviewSubRegion)
-								.Include(n=>n.ReviewSubTopic)
 								.Include(n=>n.UpdatedByUser);
                 else
                     dbItems = context.Review;
@@ -212,38 +177,11 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                 using (var transaction = context.Database.BeginTransaction())
                 {
                     var dbItem = context.Review
-									.Include(n=>n.DiscussionQuestion)
-									.Include(n=>n.QuizQuestion)
-									.Include(n=>n.ReviewActivity)
-									.Include(n=>n.ReviewCompetency)
-									.Include(n=>n.ReviewDiscipline)
-									.Include(n=>n.ReviewEdgeGuide)
-									.Include(n=>n.ReviewRegion)
-									.Include(n=>n.ReviewSector)
-									.Include(n=>n.ReviewSubRegion)
-									.Include(n=>n.ReviewSubTopic).FirstOrDefault(p => p.Id == id);
+									.Include(n=>n.ReviewCategory).FirstOrDefault(p => p.Id == id);
                     if (dbItem != null)
                     {   
-						if (dbItem.DiscussionQuestion.Count > 0)
-							context.DiscussionQuestion.RemoveRange(dbItem.DiscussionQuestion);
-						if (dbItem.QuizQuestion.Count > 0)
-							context.QuizQuestion.RemoveRange(dbItem.QuizQuestion);
-						if (dbItem.ReviewActivity.Count > 0)
-							context.ReviewActivity.RemoveRange(dbItem.ReviewActivity);
-						if (dbItem.ReviewCompetency.Count > 0)
-							context.ReviewCompetency.RemoveRange(dbItem.ReviewCompetency);
-						if (dbItem.ReviewDiscipline.Count > 0)
-							context.ReviewDiscipline.RemoveRange(dbItem.ReviewDiscipline);
-						if (dbItem.ReviewEdgeGuide.Count > 0)
-							context.ReviewEdgeGuide.RemoveRange(dbItem.ReviewEdgeGuide);
-						if (dbItem.ReviewRegion.Count > 0)
-							context.ReviewRegion.RemoveRange(dbItem.ReviewRegion);
-						if (dbItem.ReviewSector.Count > 0)
-							context.ReviewSector.RemoveRange(dbItem.ReviewSector);
-						if (dbItem.ReviewSubRegion.Count > 0)
-							context.ReviewSubRegion.RemoveRange(dbItem.ReviewSubRegion);
-						if (dbItem.ReviewSubTopic.Count > 0)
-							context.ReviewSubTopic.RemoveRange(dbItem.ReviewSubTopic);
+						if (dbItem.ReviewCategory.Count > 0)
+							context.ReviewCategory.RemoveRange(dbItem.ReviewCategory);
 
                         context.Review.Remove(dbItem);
                         context.SaveChanges();

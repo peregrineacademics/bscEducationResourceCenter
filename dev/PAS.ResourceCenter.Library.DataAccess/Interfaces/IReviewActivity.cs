@@ -1,6 +1,6 @@
 ﻿using System;
 using PAS.ResourceCenter.Library.DataAccess.Models;
-using System.Collections.Generic;
+/* Insert Collections */
 
 // This file is generated. DO NOT MODIFY
 namespace PAS.ResourceCenter.Library.DataAccess.Interfaces
@@ -11,8 +11,6 @@ namespace PAS.ResourceCenter.Library.DataAccess.Interfaces
 		Int64 Id{ get; set; }
 		Int64 Ordinal{ get; set; }
 		Int64 ReviewId{ get; set; }
-
-		Models.Review Review { get; set; }
 
     }
 }

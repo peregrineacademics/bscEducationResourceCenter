@@ -23,10 +23,6 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
 			destination.Ordinal = source.Ordinal;
 			destination.ReviewId = source.ReviewId;
 
-			if (includeNavigation)
-			{
-				destination.Review = source.Review;
-			}
         }
 
         internal static ReviewActivityDto Create(ReviewActivityDto itemDto)
@@ -51,8 +47,7 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
             {
                 IReviewActivity dbItem;
                 if (includeNavigation)
-                    dbItem = context.ReviewActivity
-								.Include(n=>n.Review).FirstOrDefault(p => p.Id == id);                
+                    dbItem = context.ReviewActivity.FirstOrDefault(p => p.Id == id);                
                 else
                     dbItem = context.ReviewActivity.FirstOrDefault(p => p.Id == id);
 
@@ -72,8 +67,7 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                     return Select(includeNavigation);
 
                 if (includeNavigation)
-                    dbItems = context.ReviewActivity.Where(whereClause)
-								.Include(n=>n.Review);
+                    dbItems = context.ReviewActivity.Where(whereClause);
                 else
                     dbItems = context.ReviewActivity.Where(whereClause);
 
@@ -99,8 +93,7 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                 var results = new List<ReviewActivityDto>();
 
                 if (includeNavigation)
-                    dbItems = context.ReviewActivity
-								.Include(n=>n.Review);
+                    dbItems = context.ReviewActivity;
                 else
                     dbItems = context.ReviewActivity;
 

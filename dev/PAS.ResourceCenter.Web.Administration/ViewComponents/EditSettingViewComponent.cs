@@ -19,7 +19,7 @@ namespace PAS.ResourceCenter.Web.Administration.ViewComponents
 
                         SettingViewModel model = new SettingViewModel();
                         model.Id = setting.Id;
-                        model.Name = setting.Name;
+                        model.Name = setting.Name.Trim();
 
                         model.Value1 = string.Empty;
                         model.Value2 = string.Empty;

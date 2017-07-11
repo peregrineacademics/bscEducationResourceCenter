@@ -34,7 +34,6 @@ namespace PAS.ResourceCenter.Library.DataAccess.DTO
 
 		public Models.QuestionType QuestionType { get; set; }
 		public ICollection<QuizAnswer> QuizAnswer { get; set; }
-		public Models.Review Review { get; set; }
 
 
         internal void Assign(IQuizQuestion item, bool includeNavigation = false)

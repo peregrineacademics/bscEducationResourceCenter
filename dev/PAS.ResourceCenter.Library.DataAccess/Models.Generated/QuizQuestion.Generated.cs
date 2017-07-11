@@ -28,7 +28,6 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
 			{
 				destination.QuestionType = source.QuestionType;
 				destination.QuizAnswer = source.QuizAnswer;
-				destination.Review = source.Review;
 			}
         }
 
@@ -56,8 +55,7 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                 if (includeNavigation)
                     dbItem = context.QuizQuestion
 								.Include(n=>n.QuestionType)
-								.Include(n=>n.QuizAnswer)
-								.Include(n=>n.Review).FirstOrDefault(p => p.Id == id);                
+								.Include(n=>n.QuizAnswer).FirstOrDefault(p => p.Id == id);                
                 else
                     dbItem = context.QuizQuestion.FirstOrDefault(p => p.Id == id);
 
@@ -79,8 +77,7 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                 if (includeNavigation)
                     dbItems = context.QuizQuestion.Where(whereClause)
 								.Include(n=>n.QuestionType)
-								.Include(n=>n.QuizAnswer)
-								.Include(n=>n.Review);
+								.Include(n=>n.QuizAnswer);
                 else
                     dbItems = context.QuizQuestion.Where(whereClause);
 
@@ -108,8 +105,7 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                 if (includeNavigation)
                     dbItems = context.QuizQuestion
 								.Include(n=>n.QuestionType)
-								.Include(n=>n.QuizAnswer)
-								.Include(n=>n.Review);
+								.Include(n=>n.QuizAnswer);
                 else
                     dbItems = context.QuizQuestion;
 

@@ -10,7 +10,7 @@ namespace PAS.ResourceCenter.Web.Administration.ViewComponents
         {
             if (Id.HasValue)
             {
-                var result = SectorDto.Get(Id.Value);
+                var result = CategoryDto.Get(Id.Value);
                 if (result.Status == Library.DataAccess.Responses.StatusCodes.OK)
                 {
                     if (result.Items.Count > 0)

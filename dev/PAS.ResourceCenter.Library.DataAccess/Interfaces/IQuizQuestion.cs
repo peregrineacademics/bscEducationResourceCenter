@@ -15,7 +15,6 @@ namespace PAS.ResourceCenter.Library.DataAccess.Interfaces
 
 		Models.QuestionType QuestionType { get; set; }
 		ICollection<QuizAnswer> QuizAnswer { get; set; }
-		Models.Review Review { get; set; }
 
     }
 }

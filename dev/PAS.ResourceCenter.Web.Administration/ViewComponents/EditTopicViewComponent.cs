@@ -10,7 +10,7 @@ namespace PAS.ResourceCenter.Web.Administration.ViewComponents
         {
             if (topicId.HasValue)
             {
-                var result = SubTopicDto.Get(topicId.Value);
+                var result = CategoryDto.Get(topicId.Value);
                 if (result.Status == Library.DataAccess.Responses.StatusCodes.OK)
                 {
                     if (result.Items.Count > 0)
@@ -19,8 +19,8 @@ namespace PAS.ResourceCenter.Web.Administration.ViewComponents
 
                         TopicViewModel model = new TopicViewModel();
                         model.TopicId = item.Id;
-                        model.DisciplineId = item.DisciplineId;
-                        model.Name = item.Name;
+                        model.DisciplineId = item.ParentId;
+                        model.Name = item.Name.Trim();
                         model.Enabled = item.IsEnabled;
                         model.DivEditId = "divmodaledittopic" + item.Id.ToString();
                         model.DivPurgeId = "divmodalpurgetopic" + item.Id.ToString();

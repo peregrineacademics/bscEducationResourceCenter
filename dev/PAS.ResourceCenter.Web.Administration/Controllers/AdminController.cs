@@ -452,7 +452,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                         else if (item.LogTypeId == LogType.Reviewer)
                         {
                             model.LinkURL = "/Reviewers/Detail?Id=" + item.LinkId.ToString();
-                            model.Description = Common.DBUtilities.GetReviewerById(item.LinkId);
+                            model.Description = Common.DBUtilities.GetUsersFullNameById(item.LinkUserId);
                         }
 
                         bool bAdd = true;
@@ -764,7 +764,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                         else if (item.LogTypeId == LogType.Reviewer)
                         {
                             model.LinkURL = "/Reviewers/Detail?Id=" + item.LinkId.ToString();
-                            model.Description = Common.DBUtilities.GetReviewerById(item.LinkId);
+                            model.Description = Common.DBUtilities.GetUsersFullNameById(item.LinkUserId);
                         }
 
                         bool bAdd = true;

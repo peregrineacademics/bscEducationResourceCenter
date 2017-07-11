@@ -38,7 +38,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
 
         public ActionResult Disciplines()
         {
-            var result = DisciplineDto.Select();
+            var result = CategoryDto.Select(x => x.GroupId.Equals(Group.Disciplines) && x.ParentId.Equals(0));
             if (result.Status == StatusCodes.OK)
             {
                 DisciplinesViewModel model = new DisciplinesViewModel();
@@ -57,7 +57,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                         disciplineModel.DivPurgeId = "divmodalpurgediscipline" + item.Id.ToString();
 
                         string topicList = string.Empty;
-                        var resultTopic = SubTopicDto.Select(x => x.DisciplineId.Equals(item.Id));
+                        var resultTopic = CategoryDto.Select(x => x.ParentId.Equals(item.Id) && x.GroupId.Equals(Group.Disciplines));
                         if (resultTopic.Status == StatusCodes.OK)
                         {
                             if (resultTopic.Items.Count > 0)
@@ -93,7 +93,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = DisciplineDto.Select(x => x.Name.Equals(model.Name.Trim()));
+                var result = CategoryDto.Select(x => x.Name.Equals(model.Name.Trim()) && x.GroupId.Equals(Group.Disciplines));
                 if (result.Status == StatusCodes.OK)
                 {
                     if (result.Items.Count > 0)
@@ -104,13 +104,15 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                     }
                     else
                     {
-                        DisciplineDto item = new DisciplineDto
+                        CategoryDto item = new CategoryDto
                         {
                             Name = model.Name.Trim(),
+                            GroupId = Group.Disciplines,
+                            ParentId = 0,
                             IsEnabled = model.Enabled
                         };
 
-                        var resultCreate = DisciplineDto.Create(item);
+                        var resultCreate = CategoryDto.Create(item);
                         if (resultCreate.Status == StatusCodes.OK)
                         {
                             string message =
@@ -144,7 +146,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = DisciplineDto.Get(model.Id);
+                var result = CategoryDto.Get(model.Id);
                 if (result.Status == StatusCodes.OK)
                 {
                     if (result.Items.Count > 0)
@@ -182,7 +184,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         {
             try
             {
-                var result = DisciplineDto.Delete(model.Id);
+                var result = CategoryDto.Delete(model.Id);
                 if (result.Status == StatusCodes.OK)
                 {
                     string message = "Discipline '" + model.Name + "' has been purged.";
@@ -214,7 +216,9 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         {
             if (Id.HasValue)
             {
-                var result = DisciplineDto.Select(x => x.Id.Equals(Id.Value), true);
+                var result =
+                   CategoryDto.Select(
+                       x => (x.Id.Equals(Id.Value) || x.ParentId.Equals(Id.Value)) && x.GroupId.Equals(Group.Disciplines));
                 if (result.Status == StatusCodes.OK)
                 {
                     TopicsViewModel model = new TopicsViewModel();
@@ -225,18 +229,27 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                         model.DisciplineName = result.First().Name;
 
                         List<TopicViewModel> topicList = new List<TopicViewModel>();
-                        foreach (var item in result.First().SubTopic.OrderBy(x => x.Name))
+                        foreach (var item in result.Items.OrderBy(x => x.Name))
                         {
-                            TopicViewModel topicViewModel = new TopicViewModel();
-                            topicViewModel.TopicId = item.Id;
-                            topicViewModel.DisciplineId = item.DisciplineId;
-                            topicViewModel.Name = item.Name;
-                            topicViewModel.Enabled = item.IsEnabled;
-                            topicViewModel.DivEditId = "divmodaledittopic" + item.Id.ToString();
-                            topicViewModel.DivPurgeId = "divmodalpurgetopic" + item.Id.ToString();
-                            
-                            topicList.Add(topicViewModel);
+                            if (item.ParentId == 0)
+                            {
+                                model.DisciplineId = result.First().Id;
+                                model.DisciplineName = result.First().Name;
+                            }
+                            else
+                            {
+                                TopicViewModel topicViewModel = new TopicViewModel();
+                                topicViewModel.TopicId = item.Id;
+                                topicViewModel.DisciplineId = Id.Value;
+                                topicViewModel.Name = item.Name;
+                                topicViewModel.Enabled = item.IsEnabled;
+                                topicViewModel.DivEditId = "divmodaledittopic" + item.Id.ToString();
+                                topicViewModel.DivPurgeId = "divmodalpurgetopic" + item.Id.ToString();
+
+                                topicList.Add(topicViewModel);
+                            }
                         }
+
                         model.Topics = topicList;
                     }
 
@@ -252,7 +265,11 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = SubTopicDto.Select(x => x.Name.Equals(model.Name.Trim()) && x.DisciplineId.Equals(model.DisciplineId));
+                var result =
+                   CategoryDto.Select(
+                       x => x.Name.Equals(model.Name.Trim()) &&
+                            x.ParentId.Equals(model.DisciplineId) &&
+                            x.GroupId.Equals(Group.Disciplines));
                 if (result.Status == StatusCodes.OK)
                 {
                     if (result.Items.Count > 0)
@@ -263,14 +280,15 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                     }
                     else
                     {
-                        SubTopicDto item = new SubTopicDto
+                        CategoryDto item = new CategoryDto
                         {
-                            DisciplineId = model.DisciplineId,
                             Name = model.Name.Trim(),
+                            GroupId = Group.Disciplines,
+                            ParentId = model.DisciplineId,
                             IsEnabled = model.Enabled
                         };
 
-                        var resultCreate = SubTopicDto.Create(item);
+                        var resultCreate = CategoryDto.Create(item);
                         if (resultCreate.Status == StatusCodes.OK)
                         {
                             string message =
@@ -304,7 +322,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = SubTopicDto.Get(model.TopicId);
+                var result = CategoryDto.Get(model.TopicId);
                 if (result.Status == StatusCodes.OK)
                 {
                     if (result.Items.Count > 0)
@@ -328,7 +346,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                                 message,
                                 Common.DBUtilities.GetUserIdByUserName(User.Identity.Name));
 
-                            return Json(new { url = Url.Action("Topics", "ReviewProperties", new { Id = item.DisciplineId }) });
+                            return Json(new { url = Url.Action("Topics", "ReviewProperties", new { Id = model.DisciplineId }) });
                         }
                     }
                 }
@@ -342,7 +360,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         {
             try
             {
-                var result = SubTopicDto.Delete(model.TopicId);
+                var result = CategoryDto.Delete(model.TopicId);
                 if (result.Status == StatusCodes.OK)
                 {
                     string message = "Topic '" + model.Name + "' has been purged.";
@@ -372,7 +390,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
 
         public ActionResult Sectors()
         {
-            var result = SectorDto.Select();
+            var result = CategoryDto.Select(x => x.GroupId.Equals(Group.Sectors));
             if (result.Status == StatusCodes.OK)
             {
                 SectorsViewModel model = new SectorsViewModel();
@@ -407,7 +425,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = SectorDto.Select(x => x.Name.Equals(model.Name.Trim()));
+                var result = CategoryDto.Select(x => x.Name.Equals(model.Name.Trim()) && x.GroupId.Equals(Group.Sectors));
                 if (result.Status == StatusCodes.OK)
                 {
                     if (result.Items.Count > 0)
@@ -418,13 +436,15 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                     }
                     else
                     {
-                        SectorDto item = new SectorDto
+                        CategoryDto item = new CategoryDto
                         {
                             Name = model.Name.Trim(),
+                            GroupId = Group.Sectors,
+                            ParentId = 0,
                             IsEnabled = model.Enabled
                         };
 
-                        var resultCreate = SectorDto.Create(item);
+                        var resultCreate = CategoryDto.Create(item);
                         if (resultCreate.Status == StatusCodes.OK)
                         {
                             string message =
@@ -458,7 +478,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = SectorDto.Get(model.Id);
+                var result = CategoryDto.Get(model.Id);
                 if (result.Status == StatusCodes.OK)
                 {
                     if (result.Items.Count > 0)
@@ -496,7 +516,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         {
             try
             {
-                var result = SectorDto.Delete(model.Id);
+                var result = CategoryDto.Delete(model.Id);
                 if (result.Status == StatusCodes.OK)
                 {
                     string message = "Sector '" + model.Name + "' has been purged.";
@@ -526,7 +546,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
 
         public ActionResult Competencies()
         {
-            var result = CompetencyDto.Select();
+            var result = CategoryDto.Select(x => x.GroupId.Equals(Group.Competencies));
             if (result.Status == StatusCodes.OK)
             {
                 CompetenciesViewModel model = new CompetenciesViewModel();
@@ -561,7 +581,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = CompetencyDto.Select(x => x.Name.Equals(model.Name.Trim()));
+                var result = CategoryDto.Select(x => x.Name.Equals(model.Name.Trim()) && x.GroupId.Equals(Group.Competencies));
                 if (result.Status == StatusCodes.OK)
                 {
                     if (result.Items.Count > 0)
@@ -572,13 +592,15 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                     }
                     else
                     {
-                        CompetencyDto item = new CompetencyDto
+                        CategoryDto item = new CategoryDto
                         {
                             Name = model.Name.Trim(),
+                            GroupId = Group.Competencies,
+                            ParentId = 0,
                             IsEnabled = model.Enabled
                         };
 
-                        var resultCreate = CompetencyDto.Create(item);
+                        var resultCreate = CategoryDto.Create(item);
                         if (resultCreate.Status == StatusCodes.OK)
                         {
                             string message =
@@ -612,7 +634,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = CompetencyDto.Get(model.Id);
+                var result = CategoryDto.Get(model.Id);
                 if (result.Status == StatusCodes.OK)
                 {
                     if (result.Items.Count > 0)
@@ -650,7 +672,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         {
             try
             {
-                var result = CompetencyDto.Delete(model.Id);
+                var result = CategoryDto.Delete(model.Id);
                 if (result.Status == StatusCodes.OK)
                 {
                     string message = "Competency '" + model.Name + "' has been purged.";
@@ -680,7 +702,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
 
         public ActionResult Regions()
         {
-            var result = RegionDto.Select();
+            var result = CategoryDto.Select(x => x.GroupId.Equals(Group.Regions) && x.ParentId.Equals(0));
             if (result.Status == StatusCodes.OK)
             {
                 RegionsViewModel model = new RegionsViewModel();
@@ -699,7 +721,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                         regionModel.DivPurgeId = "divmodalpurgeregion" + item.Id.ToString();
 
                         string subRegionList = string.Empty;
-                        var resultSubRegion = SubRegionDto.Select(x => x.RegionId.Equals(item.Id));
+                        var resultSubRegion = CategoryDto.Select(x => x.ParentId.Equals(item.Id) && x.GroupId.Equals(Group.Regions));
                         if (resultSubRegion.Status == StatusCodes.OK)
                         {
                             if (resultSubRegion.Items.Count > 0)
@@ -735,7 +757,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = RegionDto.Select(x => x.Name.Equals(model.Name.Trim()));
+                var result = CategoryDto.Select(x => x.Name.Equals(model.Name.Trim()) && x.GroupId.Equals(Group.Regions));
                 if (result.Status == StatusCodes.OK)
                 {
                     if (result.Items.Count > 0)
@@ -746,13 +768,15 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                     }
                     else
                     {
-                        RegionDto item = new RegionDto
+                        CategoryDto item = new CategoryDto
                         {
                             Name = model.Name.Trim(),
+                            GroupId = Group.Regions,
+                            ParentId = 0,
                             IsEnabled = model.Enabled
                         };
 
-                        var resultCreate = RegionDto.Create(item);
+                        var resultCreate = CategoryDto.Create(item);
                         if (resultCreate.Status == StatusCodes.OK)
                         {
                             string message =
@@ -786,7 +810,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = RegionDto.Get(model.Id);
+                var result = CategoryDto.Get(model.Id);
                 if (result.Status == StatusCodes.OK)
                 {
                     if (result.Items.Count > 0)
@@ -824,8 +848,23 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         {
             try
             {
-                var result = RegionDto.Delete(model.Id);
+                var result = CategoryDto.Select(x => x.ParentId.Equals(model.Id));
                 if (result.Status == StatusCodes.OK)
+                {
+                    if (result.Items.Count > 0)
+                    {
+                        ModelState.AddModelError(string.Empty, "Cannot delete selected region. It is already in use.");
+
+                        return PartialView(model);
+                    }
+                }
+                else
+                {
+                    throw (result.Ex);
+                }
+
+                var resultDelete = CategoryDto.Delete(model.Id);
+                if (resultDelete.Status == StatusCodes.OK)
                 {
                     string message = "Region '" + model.Name + "' has been purged.";
 
@@ -841,7 +880,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                 }
                 else
                 {
-                    throw (result.Ex);
+                    throw (resultDelete.Ex);
                 }
             }
             catch
@@ -856,28 +895,35 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         {
             if (Id.HasValue)
             {
-                var result = RegionDto.Select(x => x.Id.Equals(Id.Value), true);
+                var result = 
+                    CategoryDto.Select(
+                        x => (x.Id.Equals(Id.Value) || x.ParentId.Equals(Id.Value)) && x.GroupId.Equals(Group.Regions));
                 if (result.Status == StatusCodes.OK)
                 {
                     SubRegionsViewModel model = new SubRegionsViewModel();
 
                     if (result.Items.Count > 0)
                     {
-                        model.RegionId = result.First().Id;
-                        model.RegionName = result.First().Name;
-
                         List<SubRegionViewModel> subRegionList = new List<SubRegionViewModel>();
-                        foreach (var item in result.First().SubRegion.OrderBy(x => x.Name))
+                        foreach (var item in result.Items.OrderBy(x => x.Name))
                         {
-                            SubRegionViewModel subRegionViewModel = new SubRegionViewModel();
-                            subRegionViewModel.SubRegionId = item.Id;
-                            subRegionViewModel.RegionId = item.RegionId;
-                            subRegionViewModel.Name = item.Name;
-                            subRegionViewModel.Enabled = item.IsEnabled;
-                            subRegionViewModel.DivEditId = "divmodaleditsubregion" + item.Id.ToString();
-                            subRegionViewModel.DivPurgeId = "divmodalpurgesubregion" + item.Id.ToString();
+                            if (item.ParentId == 0)
+                            {
+                                model.RegionId = result.First().Id;
+                                model.RegionName = result.First().Name;
+                            }
+                            else
+                            {
+                                SubRegionViewModel subRegionViewModel = new SubRegionViewModel();
+                                subRegionViewModel.SubRegionId = item.Id;
+                                subRegionViewModel.RegionId = Id.Value;
+                                subRegionViewModel.Name = item.Name;
+                                subRegionViewModel.Enabled = item.IsEnabled;
+                                subRegionViewModel.DivEditId = "divmodaleditsubregion" + item.Id.ToString();
+                                subRegionViewModel.DivPurgeId = "divmodalpurgesubregion" + item.Id.ToString();
 
-                            subRegionList.Add(subRegionViewModel);
+                                subRegionList.Add(subRegionViewModel);
+                            }
                         }
                         model.SubRegions = subRegionList;
                     }
@@ -894,7 +940,11 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = SubRegionDto.Select(x => x.Name.Equals(model.Name.Trim()) && x.RegionId.Equals(model.RegionId));
+                var result = 
+                    CategoryDto.Select(
+                        x => x.Name.Equals(model.Name.Trim()) && 
+                             x.ParentId.Equals(model.RegionId) && 
+                             x.GroupId.Equals(Group.Regions));
                 if (result.Status == StatusCodes.OK)
                 {
                     if (result.Items.Count > 0)
@@ -905,14 +955,15 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                     }
                     else
                     {
-                        SubRegionDto item = new SubRegionDto
+                        CategoryDto item = new CategoryDto
                         {
-                            RegionId = model.RegionId,
                             Name = model.Name.Trim(),
+                            GroupId = Group.Regions,
+                            ParentId = model.RegionId,
                             IsEnabled = model.Enabled
                         };
 
-                        var resultCreate = SubRegionDto.Create(item);
+                        var resultCreate = CategoryDto.Create(item);
                         if (resultCreate.Status == StatusCodes.OK)
                         {
                             string message =
@@ -946,7 +997,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = SubRegionDto.Get(model.SubRegionId);
+                var result = CategoryDto.Get(model.SubRegionId);
                 if (result.Status == StatusCodes.OK)
                 {
                     if (result.Items.Count > 0)
@@ -970,7 +1021,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                                 message,
                                 Common.DBUtilities.GetUserIdByUserName(User.Identity.Name));
 
-                            return Json(new { url = Url.Action("SubRegions", "ReviewProperties", new { Id = item.RegionId }) });
+                            return Json(new { url = Url.Action("SubRegions", "ReviewProperties", new { Id = model.RegionId }) });
                         }
                     }
                 }
@@ -984,7 +1035,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         {
             try
             {
-                var result = SubRegionDto.Delete(model.SubRegionId);
+                var result = CategoryDto.Delete(model.SubRegionId);
                 if (result.Status == StatusCodes.OK)
                 {
                     string message = "Subregion '" + model.Name + "' has been purged.";

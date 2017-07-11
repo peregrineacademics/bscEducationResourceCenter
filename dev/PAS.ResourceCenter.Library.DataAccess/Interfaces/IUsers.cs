@@ -8,12 +8,16 @@ namespace PAS.ResourceCenter.Library.DataAccess.Interfaces
     public interface IUsers
     {		
 		Int32 AccessFailedCount{ get; set; }
+		String Biography{ get; set; }
 		String ConcurrencyStamp{ get; set; }
 		DateTime DateCreated{ get; set; }
+		String Degree{ get; set; }
 		String Email{ get; set; }
 		Boolean EmailConfirmed{ get; set; }
 		String FirstName{ get; set; }
+		Boolean HideFromReviewerList{ get; set; }
 		String Id{ get; set; }
+		Boolean IsActiveReviewer{ get; set; }
 		Boolean IsEnabled{ get; set; }
 		String LastName{ get; set; }
 		DateTime LastUpdated{ get; set; }
@@ -35,8 +39,8 @@ namespace PAS.ResourceCenter.Library.DataAccess.Interfaces
 		ICollection<Issue> IssueUpdatedByUser { get; set; }
 		ICollection<Log> Log { get; set; }
 		ICollection<Review> ReviewCreatedByUser { get; set; }
-		ICollection<Reviewer> ReviewerUpdatedByUser { get; set; }
-		Models.Reviewer ReviewerUser { get; set; }
+		ICollection<ReviewerCategory> ReviewerCategory { get; set; }
+		ICollection<Review> ReviewReviewer { get; set; }
 		ICollection<Review> ReviewUpdatedByUser { get; set; }
 		ICollection<UserClaims> UserClaims { get; set; }
 		ICollection<UserLogins> UserLogins { get; set; }

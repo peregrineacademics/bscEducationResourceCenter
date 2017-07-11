@@ -19,12 +19,16 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
             if (destination == null) throw new ArgumentNullException(nameof(destination));
 
 			destination.AccessFailedCount = source.AccessFailedCount;
+			destination.Biography = source.Biography;
 			destination.ConcurrencyStamp = source.ConcurrencyStamp;
 			destination.DateCreated = source.DateCreated;
+			destination.Degree = source.Degree;
 			destination.Email = source.Email;
 			destination.EmailConfirmed = source.EmailConfirmed;
 			destination.FirstName = source.FirstName;
+			destination.HideFromReviewerList = source.HideFromReviewerList;
 			destination.Id = source.Id;
+			destination.IsActiveReviewer = source.IsActiveReviewer;
 			destination.IsEnabled = source.IsEnabled;
 			destination.LastName = source.LastName;
 			destination.LastUpdated = source.LastUpdated;
@@ -48,8 +52,8 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
 				destination.IssueUpdatedByUser = source.IssueUpdatedByUser;
 				destination.Log = source.Log;
 				destination.ReviewCreatedByUser = source.ReviewCreatedByUser;
-				destination.ReviewerUpdatedByUser = source.ReviewerUpdatedByUser;
-				destination.ReviewerUser = source.ReviewerUser;
+				destination.ReviewerCategory = source.ReviewerCategory;
+				destination.ReviewReviewer = source.ReviewReviewer;
 				destination.ReviewUpdatedByUser = source.ReviewUpdatedByUser;
 				destination.UserClaims = source.UserClaims;
 				destination.UserLogins = source.UserLogins;
@@ -84,8 +88,8 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
 								.Include(n=>n.IssueUpdatedByUser)
 								.Include(n=>n.Log)
 								.Include(n=>n.ReviewCreatedByUser)
-								.Include(n=>n.ReviewerUpdatedByUser)
-								.Include(n=>n.ReviewerUser)
+								.Include(n=>n.ReviewerCategory)
+								.Include(n=>n.ReviewReviewer)
 								.Include(n=>n.ReviewUpdatedByUser)
 								.Include(n=>n.UserClaims)
 								.Include(n=>n.UserLogins)
@@ -114,8 +118,8 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
 								.Include(n=>n.IssueUpdatedByUser)
 								.Include(n=>n.Log)
 								.Include(n=>n.ReviewCreatedByUser)
-								.Include(n=>n.ReviewerUpdatedByUser)
-								.Include(n=>n.ReviewerUser)
+								.Include(n=>n.ReviewerCategory)
+								.Include(n=>n.ReviewReviewer)
 								.Include(n=>n.ReviewUpdatedByUser)
 								.Include(n=>n.UserClaims)
 								.Include(n=>n.UserLogins)
@@ -150,8 +154,8 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
 								.Include(n=>n.IssueUpdatedByUser)
 								.Include(n=>n.Log)
 								.Include(n=>n.ReviewCreatedByUser)
-								.Include(n=>n.ReviewerUpdatedByUser)
-								.Include(n=>n.ReviewerUser)
+								.Include(n=>n.ReviewerCategory)
+								.Include(n=>n.ReviewReviewer)
 								.Include(n=>n.ReviewUpdatedByUser)
 								.Include(n=>n.UserClaims)
 								.Include(n=>n.UserLogins)
@@ -201,8 +205,8 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
 									.Include(n=>n.IssueUpdatedByUser)
 									.Include(n=>n.Log)
 									.Include(n=>n.ReviewCreatedByUser)
-									.Include(n=>n.ReviewerUpdatedByUser)
-									.Include(n=>n.ReviewerUser)
+									.Include(n=>n.ReviewerCategory)
+									.Include(n=>n.ReviewReviewer)
 									.Include(n=>n.ReviewUpdatedByUser)
 									.Include(n=>n.UserClaims)
 									.Include(n=>n.UserLogins)
@@ -217,10 +221,10 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
 							context.Log.RemoveRange(dbItem.Log);
 						if (dbItem.ReviewCreatedByUser.Count > 0)
 							context.Review.RemoveRange(dbItem.ReviewCreatedByUser);
-						if (dbItem.ReviewerUpdatedByUser.Count > 0)
-							context.Reviewer.RemoveRange(dbItem.ReviewerUpdatedByUser);
-						if (dbItem.ReviewerUser != null)
-							context.Reviewer.RemoveRange(dbItem.ReviewerUser);
+						if (dbItem.ReviewerCategory.Count > 0)
+							context.ReviewerCategory.RemoveRange(dbItem.ReviewerCategory);
+						if (dbItem.ReviewReviewer.Count > 0)
+							context.Review.RemoveRange(dbItem.ReviewReviewer);
 						if (dbItem.ReviewUpdatedByUser.Count > 0)
 							context.Review.RemoveRange(dbItem.ReviewUpdatedByUser);
 						if (dbItem.UserClaims.Count > 0)

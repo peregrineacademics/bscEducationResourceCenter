@@ -35,8 +35,12 @@ namespace PAS.ResourceCenter.Web.Administration.Models
                     LastName = "Administrator",
                     FirstName = "PAS",
                     MiddleName = "",
-                    ScreenName = "",
                     Title = "",
+                    ScreenName = "",
+                    Degree = "",
+                    Biography = "",
+                    HideFromReviewerList = false,
+                    IsActiveReviewer = true,
                     IsEnabled = true,
                     DateCreated = DateTime.Now,
                     LastUpdated = DateTime.Now

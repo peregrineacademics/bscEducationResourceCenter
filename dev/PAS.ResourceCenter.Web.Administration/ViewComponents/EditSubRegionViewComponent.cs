@@ -10,7 +10,7 @@ namespace PAS.ResourceCenter.Web.Administration.ViewComponents
         {
             if (subRegionId.HasValue)
             {
-                var result = SubRegionDto.Get(subRegionId.Value);
+                var result = CategoryDto.Get(subRegionId.Value);
                 if (result.Status == Library.DataAccess.Responses.StatusCodes.OK)
                 {
                     if (result.Items.Count > 0)
@@ -19,8 +19,8 @@ namespace PAS.ResourceCenter.Web.Administration.ViewComponents
 
                         SubRegionViewModel model = new SubRegionViewModel();
                         model.SubRegionId = item.Id;
-                        model.RegionId = item.RegionId;
-                        model.Name = item.Name;
+                        model.RegionId = item.ParentId;
+                        model.Name = item.Name.Trim();
                         model.Enabled = item.IsEnabled;
                         model.DivEditId = "divmodaleditsubregion" + item.Id.ToString();
                         model.DivPurgeId = "divmodalpurgesubregion" + item.Id.ToString();

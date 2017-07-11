@@ -25,7 +25,6 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
 			if (includeNavigation)
 			{
 				destination.EdgeGuide = source.EdgeGuide;
-				destination.Review = source.Review;
 			}
         }
 
@@ -52,8 +51,7 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
                 IReviewEdgeGuide dbItem;
                 if (includeNavigation)
                     dbItem = context.ReviewEdgeGuide
-								.Include(n=>n.EdgeGuide)
-								.Include(n=>n.Review).FirstOrDefault(p => p.Id == id);                
+								.Include(n=>n.EdgeGuide).FirstOrDefault(p => p.Id == id);                
                 else
                     dbItem = context.ReviewEdgeGuide.FirstOrDefault(p => p.Id == id);
 
@@ -74,8 +72,7 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
 
                 if (includeNavigation)
                     dbItems = context.ReviewEdgeGuide.Where(whereClause)
-								.Include(n=>n.EdgeGuide)
-								.Include(n=>n.Review);
+								.Include(n=>n.EdgeGuide);
                 else
                     dbItems = context.ReviewEdgeGuide.Where(whereClause);
 
@@ -102,8 +99,7 @@ namespace PAS.ResourceCenter.Library.DataAccess.Models
 
                 if (includeNavigation)
                     dbItems = context.ReviewEdgeGuide
-								.Include(n=>n.EdgeGuide)
-								.Include(n=>n.Review);
+								.Include(n=>n.EdgeGuide);
                 else
                     dbItems = context.ReviewEdgeGuide;
 
