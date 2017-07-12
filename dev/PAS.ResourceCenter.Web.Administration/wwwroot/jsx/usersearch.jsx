@@ -29,12 +29,6 @@
     }
 });
 
-var ClientSelectOption = React.createClass({
-    render: function () {
-        return (<option value={this.props.item.id}>{this.props.item.name}</option>)
-    }
-});
-
 var UserGridTable = React.createClass({
     getInitialState: function () {
         return {
@@ -44,7 +38,6 @@ var UserGridTable = React.createClass({
                 totalRecord: 0,
                 totalPage: 0,
                 searchRoles: '',
-                searchClients: '',
                 searchName: '',
                 sortColumnName: '',
                 sortOrder: '',
@@ -69,10 +62,6 @@ var UserGridTable = React.createClass({
 
         if (this.state.data.searchRoles) {
             params.searchRoles = this.state.data.searchRoles;
-        }
-
-        if (this.state.data.searchClients) {
-            params.searchClients = this.state.data.searchClients;
         }
 
         if (this.state.data.searchName) {
@@ -142,12 +131,10 @@ var UserGridTable = React.createClass({
         this.state.data.sortColumnName = "FullName";
         this.state.data.sortOrder = "asc";
         this.state.data.searchRoles = '';
-        this.state.data.searchClients = '';
         this.state.data.searchName = '';
         this.populateData();
 
         $(this.refs.selectMultipleRoles).select2('val', null);
-        $(this.refs.selectMultipleClients).select2('val', null);
 
         document.getElementById("inputSearchName").value = '';
     },

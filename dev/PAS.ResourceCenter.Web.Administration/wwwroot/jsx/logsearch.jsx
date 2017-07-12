@@ -31,12 +31,6 @@ var LogTypeSelectOption = React.createClass({
     }
 });
 
-var ClientSelectOption = React.createClass({
-    render: function () {
-        return (<option value={this.props.item.id}>{this.props.item.name}</option>)
-    }
-});
-
 var UserSelectOption = React.createClass({
     render: function () {
         return (<option value={this.props.item.id}>{this.props.item.fullName}</option>)

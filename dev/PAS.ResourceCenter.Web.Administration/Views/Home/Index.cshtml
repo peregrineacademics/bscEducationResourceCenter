@@ -14,13 +14,141 @@
     </div>
     <!-- end row -->
     <div class="row">
-        <div class="col-sm-9 col-md-9 col-lg-9">
-            <div class="well padding-10">
+        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+            <div id="gridsearch-filter" class="panel panel-default collapsable">
+                <div class="panel-heading">
+                    <a data-toggle="collapse" data-parent="#gridsearch-filter" data-animate="true"
+                       href="#gridsearch-fields" style={{ color: 'inherit' }}>
+                        <i class="fa fa-angle-down toggler"></i>
+                        &nbsp;Filter results using the criteria below
+                    </a>
+                </div>
+                <div id="gridsearch-fields" class="panel-body fields collapse in">
+                    <div class="input-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <input type="text" class="form-control" placeholder="Search by Title"
+                               data-autocomplete='[
+			                "America’s Retailers Are Closing Stores Faster Than Ever",
+			                "Hacking the Need for a Full-Time Job",
+			                "Lies, Damn Lies, and Financial Statistics",
+			                "The Taming of a Teen Emporium",
+			                "Show Us Your Tax Reforms"]' />
+                    </div>
+                    <div class="input-group" style="margin-left:-12px;">
+                        <div class="col-sm-12 col-md-12 col-lg-12" style="margin-top:6px;">
+                            <b style="font-size:10px;">FILTER BY</b>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="margin-top:6px;">
+                            <select class="select2" multiple placeholder="Guide">
+                                <option value="1">Instructor Guide</option>
+                                <option value="2">Edge Guide</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="margin-top:6px;">
+                            <select class="select2" multiple placeholder="Issues">
+                                <option value="1">Issue 01-03-17</option>
+                                <option value="2">Issue 01-10-17</option>
+                                <option value="3">Issue 01-17-17</option>
+                                <option value="4">Issue 01-23-17</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="margin-top:6px;">
+                            <select class="select2" multiple placeholder="Reviewer">
+                                <option value="1">Larry Tunnell, Ph.D., CPA</option>
+                                <option value="2">David George Vequist IV, Ph.D.</option>
+                                <option value="3">Craig A. Turner, Ph.D.</option>
+                                <option value="4">John A. Doe</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="margin-top:6px;">
+                            <select class="select2" multiple placeholder="Discipline & Topics">
+                                <option value="1">Accounting and Taxation</option>
+                                <option value="2">&nbsp;&nbsp;&nbsp;- Financial Accounting</option>
+                                <option value="3">&nbsp;&nbsp;&nbsp;- Taxation</option>
+                                <option value="4">Business Fundamentals</option>
+                                <option value="5">&nbsp;&nbsp;&nbsp;- Accounting</option>
+                                <option value="6">&nbsp;&nbsp;&nbsp;- Management</option>
+                                <option value="7">&nbsp;&nbsp;&nbsp;- MIS</option>
+                                <option value="8">Business Law</option>
+                                <option value="9">&nbsp;&nbsp;&nbsp;- Securities</option>
+                                <option value="10">Economics</option>
+                                <option value="11">&nbsp;&nbsp;&nbsp;- Microeconomics</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="margin-top:6px;">
+                            <select class="select2" multiple placeholder="Sectors">
+                                <option value="1">Consumer Goods and Services</option>
+                                <option value="2">Energy</option>
+                                <option value="3">Financial Services</option>
+                                <option value="4">Government</option>
+                                <option value="5">Healthcare</option>
+                                <option value="6">Manufacturing</option>
+                                <option value="7">Sports and Entertainment</option>
+                                <option value="8">Business Law</option>
+                                <option value="9">Technology</option>
+                                <option value="10">Economics</option>
+                                <option value="11">Transportation</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="margin-top:6px;">
+                            <select class="select2" multiple placeholder="Competencies">
+                                <option value="1">Communication</option>
+                                <option value="2">Critical Thinking/Decision-Making</option>
+                                <option value="3">Ethics</option>
+                                <option value="4">Global Awareness</option>
+                                <option value="5">Innovation/Entrepreneurship</option>
+                                <option value="6">Leadership</option>
+                                <option value="7">Sustainability</option>
+                                <option value="8">Business Law</option>
+                                <option value="9">Technology</option>
+                                <option value="10">Economics</option>
+                                <option value="11">Transportation</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="margin-top:6px;">
+                            <select class="select2" multiple placeholder="Regions">
+                                <option value="1">Africa</option>
+                                <option value="2">Asia/Oceania</option>
+                                <option value="3">Europe</option>
+                                <option value="4">Latin America</option>
+                                <option value="5">North America</option>
+                                <option value="6">The Middle East</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="margin-top:6px;">
+                            <select class="select2" multiple placeholder="Published Status">
+                                <option value="1">Published</option>
+                                <option value="2">Unpublished</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pull-left">
+                <div class="search-result-rec-count hidden-xs" style="margin-left:-5px; font-size:13px;">
+                    &nbsp;&nbsp;Showing <b>1</b>-<b>4</b> of <b>4</b>
+                    &nbsp;&nbsp;Records (<i>4</i> found<sup>1</sup>)
+                </div>
+            </div>
+            <div class="pull-right">
+                <div style="margin-bottom:15px; margin-right:-10px;">
+                    <button id="buttonSearch" class="btn btn-primary" onClick="">
+                        <span class="hidden-xs">Search</span>
+                        <span class="visible-xs"><i class="fa fa-search"></i>&nbsp;Search</span>
+                    </button>
+                    &nbsp;
+                    <button class="btn btn-default" onClick="">
+                        <span class="hidden-xs">Reset</span>
+                        <span class="visible-xs"><i class="fa fa-undo"></i></span>
+                    </button>
+                    &nbsp;
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 well padding-10">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                         <img src="~/img/articles/no-cover.png" class="img-responsive" style="border:solid 1px #ececec" alt="img">
                     </div>
-                    <div class="col-md-9 padding-left-0">
+                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 padding-left-0">
                         <h3 class="margin-top-0">
                             <span style="font-size:13px; font-weight:bold; color:#f25a2b;">WEEKLY INSTRUCTOR GUIDE</span>
                             <br />
@@ -61,8 +189,8 @@
                             <br />
                             <br />
                             Et harum quidem rerum facilis est et expedita distinctio lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat. Pellentesque viverra vehicula sem ut volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat.
-                            <br/>
-                            <br/>
+                            <br />
+                            <br />
                         </p>
                         <a class="btn btn-primary" href="~/Home/SampleInstructorGuideView">View</a>
                         <br />
@@ -79,10 +207,10 @@
                 </div>
                 <hr />
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                         <img src="~/img/articles/article-2.png" class="img-responsive" alt="img">
                     </div>
-                    <div class="col-md-9 padding-left-0">
+                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 padding-left-0">
                         <h3 class="margin-top-0">
                             <span style="font-size:13px; font-weight:bold; color:#f25a2b;">WEEKLY INSTRUCTOR GUIDE</span>
                             <br />
@@ -137,14 +265,14 @@
                 </div>
                 <hr />
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                         <img src="~/img/articles/article-3.png" class="img-responsive" alt="img">
                     </div>
-                    <div class="col-md-9 padding-left-0">
+                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 padding-left-0">
                         <h3 class="margin-top-0">
                             <span style="font-size:13px; font-weight:bold; color:#8ec640;">EDGE GUIDE</span>
                             <br />
-                            <a href="javascript:void(0);">Hacking the Need for a Full-Time Job</a>                            
+                            <a href="javascript:void(0);">Hacking the Need for a Full-Time Job</a>
                             <br />
                             <span style="font-size:14px; color:gray;">Issue:&nbsp;<a href="javascript:void(0);">04-10-17</a></span>
                             <br />
@@ -194,10 +322,10 @@
                 </div>
                 <hr />
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                         <img src="~/img/articles/article-4.png" class="img-responsive" alt="img">
                     </div>
-                    <div class="col-md-9 padding-left-0">
+                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 padding-left-0">
                         <h3 class="margin-top-0">
                             <span style="font-size:13px; font-weight:bold; color:#8ec640;">EDGE GUIDE</span>
                             <br />
@@ -253,110 +381,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-3 col-md-3 col-lg-3">
-            <div class="well padding-10">
-                <h5 class="margin-top-0"><i class="fa fa-search"></i>&nbsp;Search</h5>
-                <div class="input-group col-sm-12 col-md-12 col-lg-12">
-                    <input type="text" class="form-control" placeholder="Search by Article Title" 
-                        data-autocomplete='[
-			                "America’s Retailers Are Closing Stores Faster Than Ever",
-			                "Hacking the Need for a Full-Time Job",
-			                "Lies, Damn Lies, and Financial Statistics",
-			                "The Taming of a Teen Emporium",
-			                "Show Us Your Tax Reforms"]' />
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
-                <div class="input-group col-sm-12 col-md-12 col-lg-12" style="margin-top:6px;">
-                    <b style="font-size:10px;">FILTER BY</b>
-                </div>
-                <div class="input-group col-sm-12 col-md-12 col-lg-12" style="margin-top:6px;">
-                    <select class="select2" multiple placeholder="Guide">
-                        <option value="1">Instructor Guide</option>
-                        <option value="2">Edge Guide</option>
-                    </select>
-                </div>
-                <div class="input-group col-sm-12 col-md-12 col-lg-12" style="margin-top:6px;">
-                    <select class="select2" multiple placeholder="Issues">
-                        <option value="1">Issue 01-03-17</option>
-                        <option value="2">Issue 01-10-17</option>
-                        <option value="3">Issue 01-17-17</option>
-                        <option value="4">Issue 01-23-17</option>
-                    </select>
-                </div>
-                <div class="input-group col-sm-12 col-md-12 col-lg-12" style="margin-top:6px;">
-                    <select class="select2" multiple placeholder="Reviewer">
-                        <option value="1">Larry Tunnell, Ph.D., CPA</option>
-                        <option value="2">David George Vequist IV, Ph.D.</option>
-                        <option value="3">Craig A. Turner, Ph.D.</option>
-                        <option value="4">John A. Doe</option>
-                    </select>
-                </div>
-                <div class="input-group col-sm-12 col-md-12 col-lg-12" style="margin-top:6px;">
-                    <select class="select2" multiple placeholder="Discipline & Topics">
-                        <option value="1">Accounting and Taxation</option>
-                        <option value="2">&nbsp;&nbsp;&nbsp;- Financial Accounting</option>
-                        <option value="3">&nbsp;&nbsp;&nbsp;- Taxation</option>
-                        <option value="4">Business Fundamentals</option>
-                        <option value="5">&nbsp;&nbsp;&nbsp;- Accounting</option>
-                        <option value="6">&nbsp;&nbsp;&nbsp;- Management</option>
-                        <option value="7">&nbsp;&nbsp;&nbsp;- MIS</option>
-                        <option value="8">Business Law</option>
-                        <option value="9">&nbsp;&nbsp;&nbsp;- Securities</option>
-                        <option value="10">Economics</option>
-                        <option value="11">&nbsp;&nbsp;&nbsp;- Microeconomics</option>
-                    </select>
-                </div>
-                <div class="input-group col-sm-12 col-md-12 col-lg-12" style="margin-top:6px;">
-                    <select class="select2" multiple placeholder="Sectors">
-                        <option value="1">Consumer Goods and Services</option>
-                        <option value="2">Energy</option>
-                        <option value="3">Financial Services</option>
-                        <option value="4">Government</option>
-                        <option value="5">Healthcare</option>
-                        <option value="6">Manufacturing</option>
-                        <option value="7">Sports and Entertainment</option>
-                        <option value="8">Business Law</option>
-                        <option value="9">Technology</option>
-                        <option value="10">Economics</option>
-                        <option value="11">Transportation</option>
-                    </select>
-                </div>
-                <div class="input-group col-sm-12 col-md-12 col-lg-12" style="margin-top:6px;">
-                    <select class="select2" multiple placeholder="Competencies">
-                        <option value="1">Communication</option>
-                        <option value="2">Critical Thinking/Decision-Making</option>
-                        <option value="3">Ethics</option>
-                        <option value="4">Global Awareness</option>
-                        <option value="5">Innovation/Entrepreneurship</option>
-                        <option value="6">Leadership</option>
-                        <option value="7">Sustainability</option>
-                        <option value="8">Business Law</option>
-                        <option value="9">Technology</option>
-                        <option value="10">Economics</option>
-                        <option value="11">Transportation</option>
-                    </select>
-                </div>
-                <div class="input-group col-sm-12 col-md-12 col-lg-12" style="margin-top:6px;">
-                    <select class="select2" multiple placeholder="Regions">
-                        <option value="1">Africa</option>
-                        <option value="2">Asia/Oceania</option>
-                        <option value="3">Europe</option>
-                        <option value="4">Latin America</option>
-                        <option value="5">North America</option>
-                        <option value="6">The Middle East</option>
-                    </select>
-                </div>
-                <div class="input-group col-sm-12 col-md-12 col-lg-12" style="margin-top:6px;">
-                    <select class="select2" multiple placeholder="Published Status">
-                        <option value="1">Published</option>
-                        <option value="2">Unpublished</option>
-                    </select>
-                </div>
-            </div>
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
             <div class="well padding-10">
                 <h5 class="margin-top-0">Disciplines & Topics</h5>
                 <ul class="no-padding list-unstyled">
