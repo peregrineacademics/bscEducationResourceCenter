@@ -37,5 +37,7 @@ namespace PAS.ResourceCenter.Web.Administration.ViewModels.Reviewers
         public string Created { get; set; }
 
         public string Modified { get; set; }
+
+        public int ReviewsCount { get; set; }
     }
 }

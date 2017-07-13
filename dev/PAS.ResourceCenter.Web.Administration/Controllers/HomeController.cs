@@ -179,42 +179,42 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         }
 
         [HttpGet]
-        public ActionResult SampleInstructorGuideView()
+        public ActionResult SampleInstructorReviewView()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult SampleInstructorGuideView(int? Id)
+        public ActionResult SampleInstructorReviewView(int? Id)
         {
-            return RedirectToAction("EditInstructorGuide", "Home");
+            return RedirectToAction("EditInstructorReview", "Home");
         }
 
-        public ActionResult SampleEdgeGuideView()
-        {
-            return View();
-        }
-
-        public ActionResult CreateGuide()
+        public ActionResult SampleEdgeReviewView()
         {
             return View();
         }
 
-        [HttpPost]
-        public ActionResult CreateGuide(int? Id)
-        {
-            return RedirectToAction("SampleInstructorGuideView", "Home");
-        }
-
-        public ActionResult EditInstructorGuide()
+        public ActionResult CreateReview()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult EditInstructorGuide(int? Id)
+        public ActionResult CreateReview(int? Id)
         {
-            return RedirectToAction("SampleInstructorGuideView", "Home");
+            return RedirectToAction("SampleInstructorReviewView", "Home");
+        }
+
+        public ActionResult EditInstructorReview()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EditInstructorReview(int? Id)
+        {
+            return RedirectToAction("SampleInstructorReviewView", "Home");
         }
 
         public ActionResult EditQuizQuestions()
@@ -225,18 +225,18 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         [HttpPost]
         public ActionResult EditQuizQuestions(int? Id)
         {
-            return RedirectToAction("SampleInstructorGuideView", "Home");
+            return RedirectToAction("SampleInstructorReviewView", "Home");
         }
 
-        public ActionResult EditEdgeGuide()
+        public ActionResult EditEdgeReview()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult EditEdgeGuide(int? Id)
+        public ActionResult EditEdgeReview(int? Id)
         {
-            return RedirectToAction("SampleEdgeGuideView", "Home");
+            return RedirectToAction("SampleEdgeReviewView", "Home");
         }
     }
 }

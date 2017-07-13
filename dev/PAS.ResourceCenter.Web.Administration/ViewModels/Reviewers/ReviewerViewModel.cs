@@ -8,6 +8,10 @@ namespace PAS.ResourceCenter.Web.Administration.ViewModels.Reviewers
         [Required(ErrorMessage = "Id is required.")]
         public string Id { get; set; }
 
+        [StringLength(64, ErrorMessage = "Invalid data length.")]
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
+        public string ScreenName { get; set; }
+
         [Required(ErrorMessage = "Last Name is required.")]
         [StringLength(64, ErrorMessage = "Invalid data length.")]
         public string LastName { get; set; }
@@ -20,19 +24,8 @@ namespace PAS.ResourceCenter.Web.Administration.ViewModels.Reviewers
         [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string MiddleName { get; set; }
 
-        [StringLength(64, ErrorMessage = "Invalid data length.")]
         [DisplayFormat(ConvertEmptyStringToNull = false)]
-        public string Title { get; set; }
-
-        [StringLength(64, ErrorMessage = "Invalid data length.")]
-        [DisplayFormat(ConvertEmptyStringToNull = false)]
-        public string ScreenName { get; set; }
-
-        [StringLength(64, ErrorMessage = "Invalid data length.")]
-        [DisplayFormat(ConvertEmptyStringToNull = false)]
-        public string Degree { get; set; }
-
-        [DisplayFormat(ConvertEmptyStringToNull = false)]
+        [DataType(DataType.MultilineText)]
         public string Biography { get; set; }
 
         [Required(ErrorMessage = "Email is required.")]

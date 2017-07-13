@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PAS.ResourceCenter.Library.DataAccess.DTO;
-using PAS.ResourceCenter.Web.Administration.ViewModels.ReviewProperties;
-using PAS.ResourceCenter.Web.Administration.ViewModels.Users;
+using PAS.ResourceCenter.Web.Administration.ViewModels.Reviewers;
 
 namespace PAS.ResourceCenter.Web.Administration.ViewComponents
 {
-    public class ResetPasswordViewComponent : ViewComponent
+    public class PurgeReviewerViewComponent : ViewComponent
     {
         public IViewComponentResult Invoke(string Id)
         {
@@ -18,13 +17,13 @@ namespace PAS.ResourceCenter.Web.Administration.ViewComponents
                     {
                         var item = result.First();
 
-                        UserViewModel model = new UserViewModel();
+                        ReviewerViewModel model = new ReviewerViewModel();
                         model.Id = item.Id;
+                        model.ScreenName = item.ScreenName;
                         model.LastName = item.LastName;
                         model.FirstName = item.FirstName;
                         model.MiddleName = item.MiddleName;
                         model.Email = item.Email;
-                        model.RoleName = string.Empty;
 
                         return View(model);
                     }

@@ -163,7 +163,6 @@ var UserGridTable = React.createClass({
                                 <option value="learner">Learner</option>
                                 <option value="faculty">Faculty</option>
                                 <option value="facultyadministrator">Faculty Admin</option>
-                                <option value="reviewer">Reviewer</option>
                                 <option value="editor">Editor</option>
                                 <option value="pasreadonlyuser">Read Only</option>
                                 <option value="pasadministrator">PAS Admin</option>

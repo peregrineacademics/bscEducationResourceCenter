@@ -6,8 +6,8 @@
                             <a href={'/Reviewers/Edit?Id=' + this.props.item.id.toString()} style={{ fontFamily: 'Times New Roman', fontSize: '24px' }}>{this.props.item.screenName}&nbsp;({this.props.item.enabled ? <i className="fa fa-check" style={{ color: 'green' }} /> : <i className="fa fa-remove" style={{ color: 'lightgray' }} />})</a>
                             <div className="pull-right">
                             <a className="btn btn-default" href={'/Reviewers/Edit?Id=' + this.props.item.id.toString()}><i className="fa fa-pencil"></i>&nbsp;Edit</a>
-                                &nbsp;
-                                <a className="btn btn-default" href={'/Home'}><i className="fa fa-comments"></i>&nbsp;Reviews(0)</a>
+                            &nbsp;
+                                <a className="btn btn-default" href={'/Home'}><i className="fa fa-comments"></i>&nbsp;Reviews&nbsp;({this.props.item.reviewsCount.toString()})</a>
                             </div>
                         </div>
                         <div className="margin-top-0">

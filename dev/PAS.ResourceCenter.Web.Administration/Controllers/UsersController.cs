@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using PAS.ResourceCenter.Library.Common.Definitions;
 using PAS.ResourceCenter.Library.DataAccess.DTO;
 using PAS.ResourceCenter.Library.DataAccess.Models;
 using PAS.ResourceCenter.Library.DataAccess.Responses;
@@ -150,6 +149,11 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                                 }
                             }
 
+                            if (model.RoleName == Constants._valueRoleReviewer)
+                            {
+                                bAdd = false;
+                            }
+
                             if (bAdd)
                             {
                                 if (listRoles.Count() > 0)
@@ -312,6 +316,11 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                                 }
                             }
 
+                            if (model.RoleName == Constants._valueRoleReviewer)
+                            {
+                                bAdd = false;
+                            }
+
                             if (bAdd)
                             {
                                 if (listRoles.Count() > 0)
@@ -408,6 +417,8 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         {
             List<SearchNameViewModel> list = new List<SearchNameViewModel>();
 
+            string reviewerRoleId = Common.DBUtilities.GetRoleIdByName(Constants._roleReviewer);
+
             if (!string.IsNullOrEmpty(searchName))
             {
                 List<SearchNameViewModel> listUsers1 = new List<SearchNameViewModel>();
@@ -421,10 +432,23 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                     {
                         foreach (var item in result1.Items.OrderBy(x => x.Email).Take(100))
                         {
-                            SearchNameViewModel model = new SearchNameViewModel();
-                            model.Name = item.Email.Trim();
+                            bool found = false;
+                            foreach (var role in item.UserRoles)
+                            {
+                                if (reviewerRoleId == role.RoleId)
+                                {
+                                    found = true;
+                                    break;
+                                }
+                            }
 
-                            listUsers1.Add(model);
+                            if (!found)
+                            {
+                                SearchNameViewModel model = new SearchNameViewModel();
+                                model.Name = item.Email.Trim();
+
+                                listUsers1.Add(model);
+                            }
                         }
                     }
                 }
@@ -436,10 +460,23 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                     {
                         foreach (var item in result2.Items.OrderBy(x => x.LastName).Take(100))
                         {
-                            SearchNameViewModel model = new SearchNameViewModel();
-                            model.Name = item.LastName.Trim();
+                            bool found = false;
+                            foreach (var role in item.UserRoles)
+                            {
+                                if (reviewerRoleId == role.RoleId)
+                                {
+                                    found = true;
+                                    break;
+                                }
+                            }
 
-                            listUsers2.Add(model);
+                            if (!found)
+                            {
+                                SearchNameViewModel model = new SearchNameViewModel();
+                                model.Name = item.LastName.Trim();
+
+                                listUsers2.Add(model);
+                            }
                         }
                     }
                 }
@@ -451,10 +488,23 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                     {
                         foreach (var item in result3.Items.OrderBy(x => x.FirstName).Take(100))
                         {
-                            SearchNameViewModel model = new SearchNameViewModel();
-                            model.Name = item.FirstName.Trim();
+                            bool found = false;
+                            foreach (var role in item.UserRoles)
+                            {
+                                if (reviewerRoleId == role.RoleId)
+                                {
+                                    found = true;
+                                    break;
+                                }
+                            }
 
-                            listUsers3.Add(model);
+                            if (!found)
+                            {
+                                SearchNameViewModel model = new SearchNameViewModel();
+                                model.Name = item.FirstName.Trim();
+
+                                listUsers3.Add(model);
+                            }
                         }
                     }
                 }
@@ -490,10 +540,23 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
 
                         foreach (var item in result.Items.OrderBy(x => x.Email).Take(100))
                         {
-                            SearchNameViewModel model = new SearchNameViewModel();
-                            model.Name = item.Email.Trim();
+                            bool found = false;
+                            foreach (var role in item.UserRoles)
+                            {
+                                if (reviewerRoleId == role.RoleId)
+                                {
+                                    found = true;
+                                    break;
+                                }
+                            }
 
-                            listUsers.Add(model);
+                            if (!found)
+                            {
+                                SearchNameViewModel model = new SearchNameViewModel();
+                                model.Name = item.Email.Trim();
+
+                                listUsers.Add(model);
+                            }
                         }
 
                         list = listUsers;
@@ -609,6 +672,11 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                                 }
                             }
 
+                            if (model.RoleName == Constants._valueRoleReviewer)
+                            {
+                                bAdd = false;
+                            }
+
                             if (bAdd)
                             {
                                 if (listRoles.Count() > 0)
@@ -711,6 +779,11 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
                                 }
                             }
 
+                            if (model.RoleName == Constants._valueRoleReviewer)
+                            {
+                                bAdd = false;
+                            }
+
                             if (bAdd)
                             {
                                 if (listRoles.Count() > 0)
@@ -754,7 +827,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
             return RedirectToAction("Index", "Users");
         }
 
-        [Authorize(Roles = "pasadministrator,clientservicemanager")]
+        [Authorize(Roles = "pasadministrator,editor")]
         public ActionResult Create()
         {
             UserViewModel model = new UserViewModel();
@@ -1198,7 +1271,7 @@ namespace PAS.ResourceCenter.Web.Administration.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> ResetPasswordEmailAsync(UserViewModel model)
+        public async Task<ActionResult> ResetUserPasswordEmail(UserViewModel model)
         {
             try
             {

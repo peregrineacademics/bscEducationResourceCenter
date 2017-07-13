@@ -206,5 +206,22 @@ namespace PAS.ResourceCenter.Web.Administration.Common
 
             return ret;
         }
+
+        public static int GetReviewsCountByUserId(string userId)
+        {
+            int ret = 0;
+
+            var result = ReviewDto.Select(x => x.ReviewerId.Equals(userId));
+            if (result.Status == StatusCodes.OK)
+            {
+                ret = result.Items.Count;
+            }
+            else
+            {
+                throw (result.Ex);
+            }
+
+            return ret;
+        }
     }
 }
